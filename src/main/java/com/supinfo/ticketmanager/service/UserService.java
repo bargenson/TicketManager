@@ -3,18 +3,19 @@ package com.supinfo.ticketmanager.service;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.supinfo.ticketmanager.dao.UserDao;
 import com.supinfo.ticketmanager.entity.Developer;
 import com.supinfo.ticketmanager.entity.ProductOwner;
 import com.supinfo.ticketmanager.entity.User;
-import com.supinfo.ticketmanager.service.security.Role;
+import com.supinfo.ticketmanager.security.UserRole;
 
 import fr.bargenson.util.security.AbstractLoginModule;
 import fr.bargenson.util.security.UserInfo;
@@ -27,13 +28,16 @@ import fr.bargenson.util.security.UserInfo;
  */
 @Stateless
 public class UserService extends AbstractLoginModule {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
     @EJB
     private UserDao userDao;
 
 
     @Override
-    protected UserInfo getUserInfo(String username) throws Exception {
+    public UserInfo getUserInfo(String username) throws Exception {
+    	LOGGER.info("getUserInfo(" + username + ")"); // TODO
         final User user = userDao.findUserByUsername(username);
         return new UserInfo() {
             public String getUsername() {
@@ -41,7 +45,9 @@ public class UserService extends AbstractLoginModule {
             }
 
             public boolean checkPassword(char[] suppliedPassword) {
-                return user.getEncryptedPassword().equals(encryptPassword(String.valueOf(suppliedPassword)));
+            	String encryptedSuppliedPassword = encryptPassword(String.valueOf(suppliedPassword));
+                LOGGER.info(encryptedSuppliedPassword); // TODO
+            	return user.getEncryptedPassword().equals(encryptedSuppliedPassword);
             }
 
             public char[] getPassword() {
@@ -51,9 +57,9 @@ public class UserService extends AbstractLoginModule {
             public List<String> getRoleNames() {
                 List<String> roles = new ArrayList<String>();
                 if(user instanceof Developer) {
-                    roles.add(Role.DEVELOPER.name());
+                    roles.add(UserRole.DEVELOPER);
                 } else if(user instanceof ProductOwner) {
-                    roles.add(Role.PRODUCT_OWNER.name());
+                    roles.add(UserRole.PRODUCT_OWNER);
                 }
                 return roles;
             }
@@ -68,22 +74,8 @@ public class UserService extends AbstractLoginModule {
         }
     }
 
-	public void resetUsers() {
-		userDao.removeAllUsers();
-		userDao.addUser(
-				new Developer(
-						"Developer", encryptPassword("devdev"), 
-						"Linus", "Torvald", 
-						"linus@torvald.org", new Date()
-				)
-		);
-		userDao.addUser(
-				new ProductOwner	(
-						"ProductOwner", encryptPassword("popo"), 
-						"Steve", "Jobs", 
-						"steve@apple.com", new Date()
-				)
-		);
+	public User findUserByUsername(String username) {
+		return userDao.findUserByUsername(username);
 	}
     
 }

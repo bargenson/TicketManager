@@ -1,0 +1,34 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/WEB-INF/templates/main.xhtml">
+
+	<ui:define name="title">Add Ticket</ui:define>
+
+	<ui:define name="content">
+		<h:form>
+			<h:messages/>
+			<div>
+				<h:outputLabel for="summary" value="#{msg['form.addTicket.summary']}" />
+				<h:inputText id="summary" value="#{ticketController.ticket.summary}" />
+			</div>
+			<div>
+				<h:outputLabel for="description" value="#{msg['form.addTicket.description']}" />
+				<h:inputTextarea id="description" value="#{ticketController.ticket.description}" />
+			</div>
+			<div>
+				<h:outputLabel for="priority" value="#{msg['form.addTicket.priority']}" />
+				<h:selectOneMenu value="#{ticketController.ticket.priority}">
+					<f:selectItems value="#{ticketController.priorityItems}" var="p" itemLabel="#{'plop'}">
+						
+					</f:selectItems>
+				</h:selectOneMenu>
+			</div>
+			<div>
+				<h:commandButton action="#{ticketController.addTicket}" value="#{msg['form.addTicket.submit']}" />
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

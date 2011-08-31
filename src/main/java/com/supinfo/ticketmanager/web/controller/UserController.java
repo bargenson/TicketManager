@@ -1,14 +1,15 @@
 package com.supinfo.ticketmanager.web.controller;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.hibernate.validator.constraints.NotBlank;
 
 import fr.bargenson.util.faces.ControllerUtils;
+import java.io.Serializable;
 
 /**
  * Created by IntelliJ IDEA.
@@ -16,9 +17,9 @@ import fr.bargenson.util.faces.ControllerUtils;
  * Date: 30/08/11
  * Time: 13:04
  */
-@ManagedBean
-@RequestScoped
-public class UserController {
+@Named
+@SessionScoped
+public class UserController implements Serializable {
 
     @NotBlank
     private String username;

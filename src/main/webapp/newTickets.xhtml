@@ -7,9 +7,9 @@
 	<ui:define name="title">New Tickets</ui:define>
 
 	<ui:define name="content">
-		<h:dataTable value="#{ticketController.newTickets}" var="t">
+		<h:dataTable value="#{ticketController.newTicketsModel}" var="t">
 			<h:column>
-				<f:facet name="header">Ticket ID</f:facet>
+				<f:facet name="header">Ticket ID</f:facet> <!-- // TODO: Internationalize me ! -->
 				<h:outputText value="#{t.id}" />
 			</h:column>
 			<h:column>
