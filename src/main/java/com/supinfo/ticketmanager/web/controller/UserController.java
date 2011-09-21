@@ -1,7 +1,8 @@
 package com.supinfo.ticketmanager.web.controller;
 
+import java.io.Serializable;
+
 import javax.enterprise.context.SessionScoped;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -9,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.hibernate.validator.constraints.NotBlank;
 
 import fr.bargenson.util.faces.ControllerUtils;
-import java.io.Serializable;
 
 /**
  * Created by IntelliJ IDEA.
@@ -29,15 +29,27 @@ public class UserController implements Serializable {
 
     
     public String login() {
-    	FacesContext context = FacesContext.getCurrentInstance();
-    	HttpServletRequest req = (HttpServletRequest) context.getExternalContext().getRequest();
+    	HttpServletRequest req = ControllerUtils.getHttpServletRequest();
         try {
             req.login(username, password);
-            return "home";
+            return "newTickets";
         } catch (ServletException e) {
         	ControllerUtils.addErrorMessage("Authentication failed.", "Bad username and/or password.");
             return null;
         }
+    }
+    
+    public String logout() {
+    	try {
+			ControllerUtils.getHttpServletRequest().logout();
+		} catch (ServletException e) {
+			e.printStackTrace();
+		}
+    	return "login";
+    }
+    
+    public boolean isAuthenticated() {
+    	return ControllerUtils.getHttpServletRequest().getUserPrincipal() != null;
     }
 
 	public String getUsername() {

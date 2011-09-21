@@ -46,7 +46,7 @@ public class UserService extends AbstractLoginModule {
 
             public boolean checkPassword(char[] suppliedPassword) {
             	String encryptedSuppliedPassword = encryptPassword(String.valueOf(suppliedPassword));
-                LOGGER.info(encryptedSuppliedPassword); // TODO
+            	LOGGER.info(encryptedSuppliedPassword + " VS " + user.getEncryptedPassword()); // TODO
             	return user.getEncryptedPassword().equals(encryptedSuppliedPassword);
             }
 
@@ -68,7 +68,7 @@ public class UserService extends AbstractLoginModule {
     
     private String encryptPassword(String password) {
         try {
-            return new String(MessageDigest.getInstance("SHA-1").digest(password.getBytes()));
+            return new String(MessageDigest.getInstance("MD5").digest(password.getBytes()));
         } catch (NoSuchAlgorithmException e) {
             throw new IllegalStateException(e);
         }
@@ -76,6 +76,12 @@ public class UserService extends AbstractLoginModule {
 
 	public User findUserByUsername(String username) {
 		return userDao.findUserByUsername(username);
+	}
+
+	public User register(User user) {
+		if(user.getPassword() != null && user.getPassword().equals(user.getPasswordConfirmation()))
+			user.setEncryptedPassword(encryptPassword(user.getPassword()));
+		return userDao.addUser(user);
 	}
     
 }

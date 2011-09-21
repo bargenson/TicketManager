@@ -7,23 +7,28 @@
 	<ui:define name="title">Login page</ui:define>
 
 	<ui:define name="content">
-		<h:form>
-			<h:messages showSummary="true"/>
-			<div>
-				<h:outputLabel for="username" value="#{msg['form.login.username']}" />
-				<h:inputText id="username" value="#{userController.username}" />
-				<h:message for="username"/>
-			</div>
-			<div>
-				<h:outputLabel for="password" value="#{msg['form.login.password']}" />
-				<h:inputSecret id="password" value="#{userController.password}" />
-				<h:message for="password"/>
-			</div>
-			<div>
-				<h:commandButton action="#{userController.login}"
-					value="#{msg['form.login.username']}" />
-			</div>
-		</h:form>
+		<h:form styleClass="cmxform" id="loginForm">
+			<h:messages />
+    		<fieldset>
+   				<legend>Login</legend>
+	    		<div class="clearfix">
+		    		<h:outputLabel value="#{msg['form.login.username']}" for="username"/>
+		    		<div class="input">
+		    			<h:inputText id="username" value="#{userController.username}" />
+		    		</div>
+	    		</div>
+	    		<div class="clearfix">
+		    		<h:outputLabel value="#{msg['form.login.password']}" for="password"/>
+		    		<div class="input">
+		    			<h:inputSecret id="password" value="#{userController.password}" />
+		    		</div>
+	    		</div>
+	    		<div class="actions">
+	    			<h:commandButton id="submit" styleClass="btn primary" 
+	    				value="#{msg['form.login.submit']}" action="#{userController.login}" />
+	    		</div>
+    		</fieldset>
+    	</h:form>
 	</ui:define>
 
 </ui:composition>

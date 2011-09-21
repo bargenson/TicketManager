@@ -16,7 +16,16 @@
         <header>
             <h1>Ticket Manager</h1>
         </header>
-
+        
+        <menu>
+        	<h:outputLink value="login.jsf" rendered="#{not userController.authenticated}">
+        		<h:outputText value="#{msg['template.main.menu.login']}" />
+        	</h:outputLink>
+        	<h:form>
+        		<h:commandLink action="#{userController.logout}" value="#{msg['template.main.menu.logout']}" rendered="#{userController.authenticated}" /> <!--  TODO i18n -->
+        	</h:form> 
+        </menu>
+        
         <section>
             <ui:insert name="content"/>
         </section>

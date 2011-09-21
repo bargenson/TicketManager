@@ -23,11 +23,16 @@ public class Developer extends User {
 
     }
 
-    public Developer(String username, String encryptedPassword, String firstName, String lastName, String email, Date dateOfBirth) {
-        super(username, encryptedPassword, firstName, lastName, email, dateOfBirth);
-    }
+    public Developer(String username, String password,
+			String passwordConfirmation, String firstName, String lastName,
+			String email, Date dateOfBirth) {
+		super(username, password, passwordConfirmation, firstName, lastName, email,
+				dateOfBirth);
+	}
 
-    public List<Ticket> getTickets() {
+
+
+	public List<Ticket> getTickets() {
         return tickets;
     }
 

@@ -27,6 +27,12 @@ public abstract class User implements Serializable {
     @NotBlank
     @Size(min = 4, max = 12)
     private String username;
+    
+    @Transient
+    private String password;
+    
+    @Transient
+    private String passwordConfirmation;
 
     @NotBlank
     private String encryptedPassword;
@@ -50,9 +56,10 @@ public abstract class User implements Serializable {
 
     }
 
-    protected User(String username, String encryptedPassword, String firstName, String lastName, String email, Date dateOfBirth) {
+    protected User(String username, String password, String passwordConfirmation, String firstName, String lastName, String email, Date dateOfBirth) {
         this.username = username;
-        this.encryptedPassword = encryptedPassword;
+        this.password = password;
+        this.passwordConfirmation = passwordConfirmation;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -114,5 +121,21 @@ public abstract class User implements Serializable {
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getPasswordConfirmation() {
+		return passwordConfirmation;
+	}
+
+	public void setPasswordConfirmation(String passwordConfirmation) {
+		this.passwordConfirmation = passwordConfirmation;
+	}
 
 }
