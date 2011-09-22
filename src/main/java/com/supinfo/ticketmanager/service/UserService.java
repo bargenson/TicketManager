@@ -5,8 +5,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,13 +31,13 @@ public class UserService extends AbstractLoginModule {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
-    @EJB
+    @Inject
     private UserDao userDao;
 
 
     @Override
     public UserInfo getUserInfo(String username) throws Exception {
-    	LOGGER.info("getUserInfo(" + username + ")"); // TODO
+    	LOGGER.info("Authenticate " + username);
         final User user = userDao.findUserByUsername(username);
         return new UserInfo() {
             public String getUsername() {
@@ -46,7 +46,6 @@ public class UserService extends AbstractLoginModule {
 
             public boolean checkPassword(char[] suppliedPassword) {
             	String encryptedSuppliedPassword = encryptPassword(String.valueOf(suppliedPassword));
-            	LOGGER.info(encryptedSuppliedPassword + " VS " + user.getEncryptedPassword()); // TODO
             	return user.getEncryptedPassword().equals(encryptedSuppliedPassword);
             }
 
@@ -79,9 +78,11 @@ public class UserService extends AbstractLoginModule {
 	}
 
 	public User register(User user) {
-		if(user.getPassword() != null && user.getPassword().equals(user.getPasswordConfirmation()))
+		if(user.getPassword() != null && user.getPassword().equals(user.getPasswordConfirmation())) {
 			user.setEncryptedPassword(encryptPassword(user.getPassword()));
-		return userDao.addUser(user);
+			return userDao.addUser(user);
+		}
+		return null;
 	}
     
 }

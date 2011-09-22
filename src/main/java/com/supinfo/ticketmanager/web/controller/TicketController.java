@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.supinfo.ticketmanager.entity.ProductOwner;
@@ -25,10 +25,10 @@ import fr.bargenson.util.faces.ControllerUtils;
 @SessionScoped
 public class TicketController implements Serializable {
 	
-	@EJB
+	@Inject
 	private TicketService ticketService;
 	
-	@EJB
+	@Inject
 	private UserService userService;
 	
 	private Ticket ticket;

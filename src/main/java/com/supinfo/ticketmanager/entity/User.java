@@ -19,6 +19,7 @@ import java.util.Date;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn
+@Table(name="UserAccount")
 public abstract class User implements Serializable {
 
     @Id @GeneratedValue

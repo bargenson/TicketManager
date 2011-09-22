@@ -39,7 +39,7 @@ public final class ControllerUtils {
 	
 	public final static void addErrorMessage(String summary, String detail) {
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail);
-    	FacesContext.getCurrentInstance().addMessage(null, message);
+		FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 
 }

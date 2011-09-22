@@ -3,8 +3,8 @@ package com.supinfo.ticketmanager.service;
 import java.util.Date;
 import java.util.List;
 
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 
 import com.supinfo.ticketmanager.dao.TicketDao;
 import com.supinfo.ticketmanager.entity.Ticket;
@@ -19,7 +19,7 @@ import com.supinfo.ticketmanager.entity.TicketStatus;
 @Stateless
 public class TicketService {
 	
-	@EJB
+	@Inject
 	private TicketDao ticketDao;
 	
 
