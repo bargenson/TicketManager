@@ -15,6 +15,7 @@ import org.xml.sax.InputSource;
 public class DbUnitUtils {
 	
 	public static void loadDataset(Connection connection, String datasetFile) throws SQLException {
+		connection.prepareStatement("SET REFERENTIAL_INTEGRITY FALSE;").execute();
 		IDatabaseConnection dbUnitconnection = null;
 		try {
 			dbUnitconnection = new DatabaseConnection(connection);
@@ -26,6 +27,7 @@ public class DbUnitUtils {
 			e.printStackTrace();
 			throw new RuntimeException("Impossible to init DB Unit.");
 		} finally {
+			connection.prepareStatement("SET REFERENTIAL_INTEGRITY TRUE;").execute();
 			if(dbUnitconnection != null)
 				dbUnitconnection.close();
 		}

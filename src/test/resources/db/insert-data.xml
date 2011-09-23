@@ -1,8 +1,13 @@
 <dataset>
+
 	<UserAccount DTYPE="PRODUCT_OWNER" id="1" dateOfBirth="1986-09-21"
-		email="bob@ticketmanager.com" encryptedPassword=""
-		firstName="Bob" lastName="Master" username="ProductOwner" />
-	<UserAccount DTYPE="PRODUCT_OWNER" id="2" dateOfBirth="1986-01-21"
-		email="linus@ticketmanager.com" encryptedPassword="plop"
-		firstName="Linus" lastName="Torvald" username="Developer" />
+		email="bob@ticketmanager.com" encryptedPassword="" firstName="Bob"
+		lastName="Master" username="ProductOwner" />
+	<UserAccount DTYPE="DEVELOPER" id="2" dateOfBirth="1986-01-21"
+		email="linus@ticketmanager.com" encryptedPassword="plop" firstName="Linus"
+		lastName="Torvald" username="Developer" />
+
+	<Ticket id="1" summary="Blabla" description="blabla++" priority="TRIVIAL"
+		status="NEW" createdAt="1986-01-21" reporter_id="1" developer_id="2" />
+		
 </dataset>

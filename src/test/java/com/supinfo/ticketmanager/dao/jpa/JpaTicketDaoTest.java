@@ -82,22 +82,22 @@ public class JpaTicketDaoTest {
 		assertEquals(persistedTicket, retrievedTicket);
 	}
 
-//	@Test
-//	public void testGetAllTickets() {
-//		List<Ticket> tickets = ticketDao.getAllTickets();
-//		assertNotNull(tickets);
-//		assertEquals(0, tickets.size());
-//	}
-//
-//	@Test
-//	public void testGetAllTicketsByStatus() {
-//		List<Ticket> newTickets = ticketDao.getAllTickets(TicketStatus.NEW);
-//		assertNotNull(newTickets);
-//		assertEquals(0, newTickets.size());
-//
-//		List<Ticket> inProgressTickets = ticketDao.getAllTickets(TicketStatus.IN_PROGRESS);
-//		assertNotNull(inProgressTickets);
-//		assertEquals(0, inProgressTickets.size());
-//	}
+	@Test
+	public void testGetAllTickets() {
+		List<Ticket> tickets = ticketDao.getAllTickets();
+		assertNotNull(tickets);
+		assertEquals(1, tickets.size());
+	}
+
+	@Test
+	public void testGetAllTicketsByStatus() {
+		List<Ticket> newTickets = ticketDao.getAllTickets(TicketStatus.NEW);
+		assertNotNull(newTickets);
+		assertEquals(1, newTickets.size());
+
+		List<Ticket> inProgressTickets = ticketDao.getAllTickets(TicketStatus.IN_PROGRESS);
+		assertNotNull(inProgressTickets);
+		assertEquals(0, inProgressTickets.size());
+	}
 
 }

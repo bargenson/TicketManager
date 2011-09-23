@@ -3,13 +3,10 @@
 
 	<persistence-unit name="ticket-manager" transaction-type="JTA">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<jta-data-source>jdbc/ticketmanager</jta-data-source>
 		<properties>
-			<property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbc.JDBCDriver" />
-			<property name="javax.persistence.jdbc.user" value="sa" />
-			<property name="javax.persistence.jdbc.password" value="" />
-			<property name="javax.persistence.jdbc.url" value="jdbc:derby:ticketmanager" />
 			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
-			<property name="hibernate.dialect" value="org.hibernate.dialect.DerbyDialect" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect" />
 		</properties>
 	</persistence-unit>
 
