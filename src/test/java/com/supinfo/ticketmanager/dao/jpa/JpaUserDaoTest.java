@@ -8,7 +8,6 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -71,7 +70,7 @@ public class JpaUserDaoTest {
 		assertNotNull(persistedUser.getId());
 		
 		final ProductOwner retrievedUser = em.find(ProductOwner.class, persistedUser.getId());
-		assertEquals(persistedUser, retrievedUser);
+		assertEquals(persistedUser.getUsername(), retrievedUser.getUsername());
 	}
 	
 	@Test
@@ -81,7 +80,7 @@ public class JpaUserDaoTest {
 		assertNotNull(persistedUser.getId());
 		
 		final Developer retrievedUser = em.find(Developer.class, persistedUser.getId());
-		assertEquals(persistedUser, retrievedUser);
+		assertEquals(persistedUser.getUsername(), retrievedUser.getUsername());
 	}
 	
 	@Test
