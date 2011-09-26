@@ -17,7 +17,7 @@ import com.supinfo.ticketmanager.entity.User;
 @Local
 public interface UserDao {
 	
-	User addUser(User user);
+	<T extends User> T addUser(T user);
     User findUserByUsername(String username);
 	List<User> getAllUsers();
 	void removeAllUsers();

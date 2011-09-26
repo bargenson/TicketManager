@@ -1,5 +1,7 @@
 package com.supinfo.ticketmanager.entity;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -125,55 +127,14 @@ public class Ticket implements Serializable {
         this.developer = developer;
     }
 
-	@Override
+    @Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((createdAt == null) ? 0 : createdAt.hashCode());
-		result = prime * result
-				+ ((description == null) ? 0 : description.hashCode());
-		result = prime * result
-				+ ((priority == null) ? 0 : priority.hashCode());
-		result = prime * result + ((status == null) ? 0 : status.hashCode());
-		result = prime * result + ((summary == null) ? 0 : summary.hashCode());
-		return result;
+		return HashCodeBuilder.reflectionHashCode(this, "id", "developer", "reporter");
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Ticket other = (Ticket) obj;
-		if (createdAt == null) {
-			if (other.createdAt != null)
-				return false;
-		} else if (!createdAt.equals(other.createdAt))
-			return false;
-		if (description == null) {
-			if (other.description != null)
-				return false;
-		} else if (!description.equals(other.description))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (priority != other.priority)
-			return false;
-		if (status != other.status)
-			return false;
-		if (summary == null) {
-			if (other.summary != null)
-				return false;
-		} else if (!summary.equals(other.summary))
-			return false;
-		return true;
+		return EqualsBuilder.reflectionEquals(this, obj, "developer", "reporter");
 	}
     
 }

@@ -2,16 +2,16 @@ package com.supinfo.ticketmanager.dao.jpa;
 
 import java.util.List;
 
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+
 import com.supinfo.ticketmanager.dao.UserDao;
 import com.supinfo.ticketmanager.entity.Developer;
 import com.supinfo.ticketmanager.entity.ProductOwner;
 import com.supinfo.ticketmanager.entity.User;
 import com.supinfo.ticketmanager.exception.UnknownUserException;
-
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
 
 /**
  * Created by IntelliJ IDEA.
@@ -36,7 +36,7 @@ public class JpaUserDao implements UserDao {
     }
 
 	@Override
-	public User addUser(User user) {
+	public <T extends User> T addUser(T user) {
 		em.persist(user);
 		return user;
 	}

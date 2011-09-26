@@ -3,6 +3,10 @@ package com.supinfo.ticketmanager.entity;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import java.util.Date;
 import java.util.List;
 
@@ -23,14 +27,11 @@ public class Developer extends User {
 
     }
 
-    public Developer(String username, String password,
-			String passwordConfirmation, String firstName, String lastName,
-			String email, Date dateOfBirth) {
-		super(username, password, passwordConfirmation, firstName, lastName, email,
-				dateOfBirth);
+	public Developer(String username, String encryptedPassword,
+			String firstName, String lastName, String email, Date dateOfBirth) {
+
+		super(username, encryptedPassword, firstName, lastName, email, dateOfBirth);
 	}
-
-
 
 	public List<Ticket> getTickets() {
         return tickets;
@@ -39,5 +40,15 @@ public class Developer extends User {
     public void setTickets(List<Ticket> tickets) {
         this.tickets = tickets;
     }
+    
+    @Override
+	public int hashCode() {
+		return HashCodeBuilder.reflectionHashCode(this, "id", "tickets");
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return EqualsBuilder.reflectionEquals(this, obj, "tickets");
+	}
     
 }

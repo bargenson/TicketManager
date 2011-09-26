@@ -1,7 +1,5 @@
 package com.supinfo.ticketmanager.service;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +15,7 @@ import com.supinfo.ticketmanager.entity.ProductOwner;
 import com.supinfo.ticketmanager.entity.User;
 import com.supinfo.ticketmanager.security.UserRole;
 
+import fr.bargenson.util.crypto.MD5Digester;
 import fr.bargenson.util.security.AbstractLoginModule;
 import fr.bargenson.util.security.UserInfo;
 
@@ -45,7 +44,7 @@ public class UserService extends AbstractLoginModule {
             }
 
             public boolean checkPassword(char[] suppliedPassword) {
-            	String encryptedSuppliedPassword = encryptPassword(String.valueOf(suppliedPassword));
+            	String encryptedSuppliedPassword = new MD5Digester().digest(String.valueOf(suppliedPassword));
             	return user.getEncryptedPassword().equals(encryptedSuppliedPassword);
             }
 
@@ -64,25 +63,13 @@ public class UserService extends AbstractLoginModule {
             }
         };
     }
-    
-    private String encryptPassword(String password) {
-        try {
-            return new String(MessageDigest.getInstance("MD5").digest(password.getBytes()));
-        } catch (NoSuchAlgorithmException e) {
-            throw new IllegalStateException(e);
-        }
-    }
 
 	public User findUserByUsername(String username) {
 		return userDao.findUserByUsername(username);
 	}
 
 	public User register(User user) {
-		if(user.getPassword() != null && user.getPassword().equals(user.getPasswordConfirmation())) {
-			user.setEncryptedPassword(encryptPassword(user.getPassword()));
-			return userDao.addUser(user);
-		}
-		return null;
+		return userDao.addUser(user);
 	}
     
 }
