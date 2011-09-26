@@ -142,17 +142,22 @@ public class JpaUserDaoTest {
 	private static Developer getSimpleDeveloper() {
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(1987, 8, 16, 0, 0, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
 		
 		return new Developer(
 				"username", "password", "firstName", 
-				"lastName", "email@email.fr", new Date(558741600000L)
+				"lastName", "email@email.fr", calendar.getTime()
 		);
 	}
 	
 	private static ProductOwner getSimpleProductOwner() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(1987, 8, 16, 0, 0, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		
 		return new ProductOwner(
 				"username", "password", "firstName", 
-				"lastName", "email@email.fr", new Date(558741600000L)
+				"lastName", "email@email.fr", calendar.getTime()
 		);
 	}
 
