@@ -1,6 +1,5 @@
 package com.supinfo.ticketmanager.web.controller;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -19,17 +18,22 @@ import com.supinfo.ticketmanager.entity.TicketStatus;
 import com.supinfo.ticketmanager.service.TicketService;
 import com.supinfo.ticketmanager.service.UserService;
 
-import fr.bargenson.util.faces.ControllerUtils;
+import fr.bargenson.util.faces.ControllerHelper;
 
 @Named
 @SessionScoped
-public class TicketController implements Serializable {
+public class TicketController {
 	
+	protected static final String ADD_TICKET_OUTCOME = "newTickets";
+
 	@Inject
 	private TicketService ticketService;
 	
 	@Inject
 	private UserService userService;
+	
+	@Inject
+	private ControllerHelper controllerHelper;
 	
 	private Ticket ticket;
 	private DataModel<Ticket> newTicketsModel;
@@ -50,16 +54,16 @@ public class TicketController implements Serializable {
 	}
 	
 	public String addTicket() {
-		String username = ControllerUtils.getUserPrincipal().getName();
+		String username = controllerHelper.getUserPrincipal().getName();
 		ProductOwner reporter = (ProductOwner) userService.findUserByUsername(username);
 		ticket.setReporter(reporter);
 		ticketService.addTicket(ticket);
-		return "newTickets";
+		return ADD_TICKET_OUTCOME;
 	}
 	
 	public List<SelectItem> getPriorityItems() {
 		if(priorityItems == null) {
-			ResourceBundle bundle = ControllerUtils.getELValue("msg", ResourceBundle.class);
+			ResourceBundle bundle = controllerHelper.getResourceBundle("msg");
 			priorityItems = new ArrayList<SelectItem>();
 			for (TicketPriority priority : TicketPriority.values()) {
 				priorityItems.add(new SelectItem(priority, bundle.getString(priority.getBundleKey())));

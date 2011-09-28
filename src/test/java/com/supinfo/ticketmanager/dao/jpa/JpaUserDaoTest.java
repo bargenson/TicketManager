@@ -17,7 +17,7 @@ import javax.persistence.PersistenceContext;
 import org.hibernate.Session;
 import org.hibernate.ejb.EntityManagerImpl;
 import org.hibernate.jdbc.Work;
-import org.jboss.arquillian.api.Deployment;
+import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;

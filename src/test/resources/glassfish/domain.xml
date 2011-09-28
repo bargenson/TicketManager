@@ -20,12 +20,12 @@
 			<resource-ref ref="jdbc/ticketmanager" />
 		</server>
 	</servers>
-	<servers>
-		<server name="server" config-ref="server-config">
-			<resource-ref ref="jdbc/__TimerPool" />
-			<resource-ref ref="jdbc/__default" />
-		</server>
-	</servers>
+<!-- 	<servers> -->
+<!-- 		<server name="server" config-ref="server-config"> -->
+<!-- 			<resource-ref ref="jdbc/__TimerPool" /> -->
+<!-- 			<resource-ref ref="jdbc/__default" /> -->
+<!-- 		</server> -->
+<!-- 	</servers> -->
 	<configs>
 		<config name="server-config">
 			<http-service>
@@ -78,21 +78,21 @@
 			</log-service>
 			<security-service
 				activate-default-principal-to-role-mapping="true" jacc="simple">
-				<auth-realm classname="com.sun.enterprise.security.auth.realm.file.FileRealm"
-					name="admin-realm">
-					<property value="${com.sun.aas.instanceRoot}/config/admin-keyfile"
-						name="file" />
-					<property value="fileRealm" name="jaas-context" />
-				</auth-realm>
-				<auth-realm classname="com.sun.enterprise.security.auth.realm.file.FileRealm"
-					name="file">
-					<property value="${com.sun.aas.instanceRoot}/config/keyfile"
-						name="file" />
-					<property value="fileRealm" name="jaas-context" />
-				</auth-realm>
-				<auth-realm
-					classname="com.sun.enterprise.security.auth.realm.certificate.CertificateRealm"
-					name="certificate" />
+<!-- 				<auth-realm classname="com.sun.enterprise.security.auth.realm.file.FileRealm" -->
+<!-- 					name="admin-realm"> -->
+<!-- 					<property value="${com.sun.aas.instanceRoot}/config/admin-keyfile" -->
+<!-- 						name="file" /> -->
+<!-- 					<property value="fileRealm" name="jaas-context" /> -->
+<!-- 				</auth-realm> -->
+<!-- 				<auth-realm classname="com.sun.enterprise.security.auth.realm.file.FileRealm" -->
+<!-- 					name="file"> -->
+<!-- 					<property value="${com.sun.aas.instanceRoot}/config/keyfile" -->
+<!-- 						name="file" /> -->
+<!-- 					<property value="fileRealm" name="jaas-context" /> -->
+<!-- 				</auth-realm> -->
+<!-- 				<auth-realm -->
+<!-- 					classname="com.sun.enterprise.security.auth.realm.certificate.CertificateRealm" -->
+<!-- 					name="certificate" /> -->
 				<jacc-provider
 					policy-configuration-factory-provider="com.sun.enterprise.security.provider.PolicyConfigurationFactoryImpl"
 					policy-provider="com.sun.enterprise.security.provider.PolicyWrapper"
@@ -169,6 +169,10 @@
 				</jvm-options>
 				<jvm-options>-Dorg.glassfish.jms.InitializeOnDemand=true
 				</jvm-options>
+				<jvm-options>-Xms512m</jvm-options>
+				<jvm-options>-Xmx1024m</jvm-options>
+				<jvm-options>-XX:PermSize=1024m</jvm-options>
+				<jvm-options>-XX:MaxPermSize=2048m</jvm-options>
 			</java-config>
 			<network-config>
 				<protocols>

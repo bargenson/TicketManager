@@ -1,9 +1,12 @@
 package fr.bargenson.util.faces;
 
 import java.security.Principal;
+import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -12,12 +15,19 @@ import javax.servlet.http.HttpServletRequest;
  * Date: 30/08/11
  * Time: 23:00
  */
-public final class ControllerUtils {
+@Named
+public class ControllerHelper {
 	
-	private ControllerUtils() { }
+	public ControllerHelper() {
+		
+	}
+	
+	public ResourceBundle getResourceBundle(String resourceBundleId) {
+		return getELValue(resourceBundleId, ResourceBundle.class);
+	}
 	
 	@SuppressWarnings("unchecked")
-	public final static <T> T getELValue(String name, Class<T> cls) {
+	private <T> T getELValue(String name, Class<T> cls) {
 		return (T)  
 				FacesContext.getCurrentInstance()
 							.getApplication()
@@ -29,17 +39,25 @@ public final class ControllerUtils {
 							.getValue(FacesContext.getCurrentInstance().getELContext());
 	}
 	
-	public final static HttpServletRequest getHttpServletRequest() {
+	public HttpServletRequest getHttpServletRequest() {
 		return (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
 	}
 	
-	public final static Principal getUserPrincipal() {
+	public Principal getUserPrincipal() {
 		return FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
 	}
 	
-	public final static void addErrorMessage(String summary, String detail) {
+	public void addErrorMessage(String summary, String detail) {
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail);
 		FacesContext.getCurrentInstance().addMessage(null, message);
+	}
+	
+	public void login(String username, String password) throws ServletException {
+		getHttpServletRequest().login(username, password);
+	}
+	
+	public void logout() throws ServletException {
+		getHttpServletRequest().logout();
 	}
 
 }

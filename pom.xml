@@ -9,18 +9,42 @@
 	<name>TicketManager Maven Webapp</name>
 
 	<properties>
-		<version.arquillian>1.0.0.Alpha5</version.arquillian>
+		<version.arquillian>1.0.0.CR4</version.arquillian>
 		<version.shrinkwrap>1.0.0-beta-5</version.shrinkwrap>
 		<version.jsfunit>2.0.0.Beta2</version.jsfunit>
+		<version.arquillian.glassfish>1.0.0.CR1</version.arquillian.glassfish>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<repositories>
 		<repository>
-			<id>jboss-repository</id>
-			<name>JBoss Maven Repository</name>
-			<url>https://repository.jboss.org/nexus/content/groups/public/</url>
+			<id>jboss-public-repository-group</id>
+			<name>JBoss Public Maven Repository Group</name>
+			<url>https://repository.jboss.org/nexus/content/groups/public</url>
+			<layout>default</layout>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>never</updatePolicy>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>never</updatePolicy>
+			</snapshots>
 		</repository>
 	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>jboss-public-repository-group</id>
+			<name>JBoss Public Repository Group</name>
+			<url>http://repository.jboss.org/nexus/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
 
 	<dependencies>
 		<dependency>
@@ -30,8 +54,8 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.jboss.arquillian</groupId>
-			<artifactId>arquillian-junit</artifactId>
+			<groupId>org.jboss.arquillian.junit</groupId>
+			<artifactId>arquillian-junit-container</artifactId>
 			<version>${version.arquillian}</version>
 			<scope>test</scope>
 		</dependency>
@@ -76,15 +100,9 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>org.jboss.arquillian</groupId>
-			<artifactId>arquillian-spi</artifactId>
-			<version>${version.arquillian}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.jboss.arquillian.container</groupId>
 			<artifactId>arquillian-glassfish-embedded-3.1</artifactId>
-			<version>${version.arquillian}</version>
+			<version>${version.arquillian.glassfish}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -200,17 +218,20 @@
 						</lifecycleMappingMetadata>
 					</configuration>
 				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>findbugs-maven-plugin</artifactId>
+					<version>2.4-SNAPSHOT</version>
+					<configuration>
+						<xmlOutput>true</xmlOutput>
+					</configuration>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
 
 	<reporting>
 		<plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>findbugs-maven-plugin</artifactId>
-				<version>2.3.3</version>
-			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-pmd-plugin</artifactId>

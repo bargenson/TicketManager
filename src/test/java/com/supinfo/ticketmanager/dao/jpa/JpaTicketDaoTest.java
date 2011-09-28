@@ -17,7 +17,7 @@ import org.dbunit.DatabaseUnitException;
 import org.hibernate.Session;
 import org.hibernate.ejb.EntityManagerImpl;
 import org.hibernate.jdbc.Work;
-import org.jboss.arquillian.api.Deployment;
+import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -28,6 +28,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.supinfo.ticketmanager.dao.TicketDao;
+import com.supinfo.ticketmanager.dao.jpa.JpaTicketDao;
 import com.supinfo.ticketmanager.entity.ProductOwner;
 import com.supinfo.ticketmanager.entity.Ticket;
 import com.supinfo.ticketmanager.entity.TicketPriority;

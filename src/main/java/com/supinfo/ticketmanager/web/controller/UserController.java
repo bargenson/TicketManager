@@ -1,15 +1,13 @@
 package com.supinfo.ticketmanager.web.controller;
 
-import java.io.Serializable;
-
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import fr.bargenson.util.faces.ControllerUtils;
+import fr.bargenson.util.faces.ControllerHelper;
 
 /**
  * Created by IntelliJ IDEA.
@@ -19,8 +17,16 @@ import fr.bargenson.util.faces.ControllerUtils;
  */
 @Named
 @SessionScoped
-public class UserController implements Serializable {
-
+public class UserController {
+	
+	protected static final String LOGIN_SUCCEED_OUTCOME = "newTickets";
+	protected static final String LOGIN_FAILED_OUTCOME = null;
+	protected static final String LOGOUT_OUTCOME = "login";
+	
+	
+	@Inject
+	private ControllerHelper controllerHelper;
+	
     @NotBlank
     private String username;
 
@@ -29,27 +35,26 @@ public class UserController implements Serializable {
 
     
     public String login() {
-    	HttpServletRequest req = ControllerUtils.getHttpServletRequest();
         try {
-            req.login(username, password);
-            return "newTickets";
+        	controllerHelper.login(username, password);
+            return LOGIN_SUCCEED_OUTCOME;
         } catch (ServletException e) {
-        	ControllerUtils.addErrorMessage("Authentication failed.", "Bad username and/or password.");
-            return null;
+        	controllerHelper.addErrorMessage("Authentication failed.", "Bad username and/or password.");
+            return LOGIN_FAILED_OUTCOME;
         }
     }
     
     public String logout() {
     	try {
-			ControllerUtils.getHttpServletRequest().logout();
+    		controllerHelper.logout();
 		} catch (ServletException e) {
 			e.printStackTrace();
 		}
-    	return "login";
+    	return LOGOUT_OUTCOME;
     }
     
     public boolean isAuthenticated() {
-    	return ControllerUtils.getHttpServletRequest().getUserPrincipal() != null;
+    	return controllerHelper.getUserPrincipal() != null;
     }
 
 	public String getUsername() {
