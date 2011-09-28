@@ -59,7 +59,7 @@ public abstract class User implements Serializable {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.dateOfBirth = dateOfBirth;
+        this.dateOfBirth = new Date(dateOfBirth.getTime());
     }
 
     public Long getId() {
@@ -111,11 +111,11 @@ public abstract class User implements Serializable {
     }
 
     public Date getDateOfBirth() {
-        return dateOfBirth;
+        return new Date(dateOfBirth.getTime());
     }
 
     public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+        this.dateOfBirth = new Date(dateOfBirth.getTime());
     }
 
 	@Override

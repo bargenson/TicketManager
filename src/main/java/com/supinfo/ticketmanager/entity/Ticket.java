@@ -59,7 +59,7 @@ public class Ticket implements Serializable {
         this.description = description;
         this.priority = priority;
         this.status = status;
-        this.createdAt = createdAt;
+        this.createdAt = new Date(createdAt.getTime());
         this.reporter = reporter;
     }
 
@@ -104,11 +104,11 @@ public class Ticket implements Serializable {
     }
 
     public Date getCreatedAt() {
-        return createdAt;
+        return new Date(createdAt.getTime());
     }
 
     public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+        this.createdAt = new Date(createdAt.getTime());
     }
 
     public ProductOwner getReporter() {

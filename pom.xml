@@ -8,6 +8,10 @@
 	<version>2.0</version>
 	<name>TicketManager Maven Webapp</name>
 
+	<scm>
+		<url>git://github.com/bargenson/TicketManager.git</url>
+	</scm>
+
 	<properties>
 		<version.arquillian>1.0.0.CR4</version.arquillian>
 		<version.shrinkwrap>1.0.0-beta-5</version.shrinkwrap>
@@ -183,6 +187,42 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<targetJdk>1.6</targetJdk>
+					<failurePriority>0</failurePriority>
+				</configuration>
+				<executions>
+					<execution>
+						<id>PMD analyse</id>
+						<goals>
+							<goal>check</goal>
+							<goal>cpd-check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>2.3.2-SNAPSHOT</version>
+				<configuration>
+					<xmlOutput>true</xmlOutput>
+					<effort>Max</effort>
+					<threshold>High</threshold>
+				</configuration>
+				<executions>
+					<execution>
+						<id>FindBugs analyse</id>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -218,26 +258,8 @@
 						</lifecycleMappingMetadata>
 					</configuration>
 				</plugin>
-				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>findbugs-maven-plugin</artifactId>
-					<version>2.4-SNAPSHOT</version>
-					<configuration>
-						<xmlOutput>true</xmlOutput>
-					</configuration>
-				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
-
-	<reporting>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-pmd-plugin</artifactId>
-				<version>2.5</version>
-			</plugin>
-		</plugins>
-	</reporting>
 
 </project>

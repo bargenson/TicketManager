@@ -21,7 +21,7 @@ import java.util.List;
 public class Developer extends User {
 
     @OneToMany
-    private List<Ticket> tickets;
+    private List<Ticket> ticketsInProgress;
 
     public Developer() {
 
@@ -33,22 +33,22 @@ public class Developer extends User {
 		super(username, encryptedPassword, firstName, lastName, email, dateOfBirth);
 	}
 
-	public List<Ticket> getTickets() {
-        return tickets;
+	public List<Ticket> getTicketsInProgress() {
+        return ticketsInProgress;
     }
 
-    public void setTickets(List<Ticket> tickets) {
-        this.tickets = tickets;
+    public void setTicketsInProgress(List<Ticket> ticketsInProgress) {
+        this.ticketsInProgress = ticketsInProgress;
     }
     
     @Override
 	public int hashCode() {
-		return HashCodeBuilder.reflectionHashCode(this, "id", "tickets");
+		return HashCodeBuilder.reflectionHashCode(this, "id", "ticketsInProgress");
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		return EqualsBuilder.reflectionEquals(this, obj, "tickets");
+		return EqualsBuilder.reflectionEquals(this, obj, "ticketsInProgress");
 	}
     
 }

@@ -11,7 +11,7 @@ public class GenericUserInfo implements UserInfo {
 	
 	public GenericUserInfo(String username, char[] password, List<String> roleNames) {
 		this.username = username;
-		this.password = password;
+		this.password = Arrays.copyOf(password, password.length);
 		this.roleNames = roleNames;
 	}
 
@@ -32,7 +32,7 @@ public class GenericUserInfo implements UserInfo {
 
 	@Override
 	public char[] getPassword() {
-		return password;
+		return Arrays.copyOf(password, password.length);
 	}
 
 }

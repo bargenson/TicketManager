@@ -44,7 +44,7 @@ public class Comment implements Serializable {
 
     public Comment(String content, Date createdAt, User author) {
         this.content = content;
-        this.createdAt = createdAt;
+        this.createdAt = new Date(createdAt.getTime());
         this.author = author;
     }
 
@@ -65,11 +65,11 @@ public class Comment implements Serializable {
     }
 
     public Date getCreatedAt() {
-        return createdAt;
+        return new Date(createdAt.getTime());
     }
 
     public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+        this.createdAt = new Date(createdAt.getTime());
     }
 
     public Ticket getTicket() {

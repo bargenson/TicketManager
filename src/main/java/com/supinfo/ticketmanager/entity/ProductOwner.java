@@ -21,7 +21,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 public class ProductOwner extends User {
 
     @OneToMany
-    private List<Ticket> tickets;
+    private List<Ticket> reportedTickets;
 
     public ProductOwner() {
 
@@ -33,22 +33,22 @@ public class ProductOwner extends User {
 				dateOfBirth);
 	}
 
-	public List<Ticket> getTickets() {
-        return tickets;
+	public List<Ticket> getReportedTickets() {
+        return reportedTickets;
     }
 
-    public void setTickets(List<Ticket> tickets) {
-        this.tickets = tickets;
+    public void setReportedTickets(List<Ticket> reportedTickets) {
+        this.reportedTickets = reportedTickets;
     }
     
     @Override
 	public int hashCode() {
-		return HashCodeBuilder.reflectionHashCode(this, "id", "tickets");
+		return HashCodeBuilder.reflectionHashCode(this, "id", "reportedTickets");
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		return EqualsBuilder.reflectionEquals(this, obj, "tickets");
+		return EqualsBuilder.reflectionEquals(this, obj, "reportedTickets");
 	}
 
 }
