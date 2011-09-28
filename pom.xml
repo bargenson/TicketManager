@@ -9,7 +9,9 @@
 	<name>TicketManager Maven Webapp</name>
 
 	<properties>
-		<arquillian.version>1.0.0.Alpha5</arquillian.version>
+		<version.arquillian>1.0.0.Alpha5</version.arquillian>
+		<version.shrinkwrap>1.0.0-beta-5</version.shrinkwrap>
+		<version.jsfunit>2.0.0.Beta2</version.jsfunit>
 	</properties>
 
 	<repositories>
@@ -30,7 +32,7 @@
 		<dependency>
 			<groupId>org.jboss.arquillian</groupId>
 			<artifactId>arquillian-junit</artifactId>
-			<version>${arquillian.version}</version>
+			<version>${version.arquillian}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -76,13 +78,13 @@
 		<dependency>
 			<groupId>org.jboss.arquillian</groupId>
 			<artifactId>arquillian-spi</artifactId>
-			<version>${arquillian.version}</version>
+			<version>${version.arquillian}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.arquillian.container</groupId>
 			<artifactId>arquillian-glassfish-embedded-3.1</artifactId>
-			<version>1.0.0.Alpha5</version>
+			<version>${version.arquillian}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -115,6 +117,24 @@
 			<groupId>commons-beanutils</groupId>
 			<artifactId>commons-beanutils</artifactId>
 			<version>1.8.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.jsfunit</groupId>
+			<artifactId>jsfunit-arquillian</artifactId>
+			<version>${version.jsfunit}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.jsfunit</groupId>
+			<artifactId>jboss-jsfunit-core</artifactId>
+			<version>${version.jsfunit}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.shrinkwrap</groupId>
+			<artifactId>shrinkwrap-impl-base</artifactId>
+			<version>${version.shrinkwrap}</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
