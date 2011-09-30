@@ -1,11 +1,16 @@
 package com.supinfo.ticketmanager.web.controller;
 
-import javax.enterprise.context.SessionScoped;
+import java.io.Serializable;
+
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletException;
 
 import org.hibernate.validator.constraints.NotBlank;
+
+import com.supinfo.ticketmanager.entity.ProductOwner;
+import com.supinfo.ticketmanager.service.UserService;
 
 import fr.bargenson.util.faces.ControllerHelper;
 
@@ -16,10 +21,10 @@ import fr.bargenson.util.faces.ControllerHelper;
  * Time: 13:04
  */
 @Named
-@SessionScoped
-public class UserController {
+@RequestScoped
+public class UserController implements Serializable {
 	
-	protected static final String LOGIN_SUCCEED_OUTCOME = "newTickets";
+	protected static final String LOGIN_SUCCEED_OUTCOME = "newTickets?faces-redirect=true";
 	protected static final String LOGIN_FAILED_OUTCOME = null;
 	protected static final String LOGOUT_OUTCOME = "login";
 	
@@ -27,10 +32,13 @@ public class UserController {
 	@Inject
 	private ControllerHelper controllerHelper;
 	
-    @NotBlank
+	@Inject
+	private UserService userService;
+	
+    @NotBlank(message="Username is required")
     private String username;
 
-    @NotBlank
+    @NotBlank(message="Password is required")
     private String password;
 
     
@@ -56,8 +64,16 @@ public class UserController {
     public boolean isAuthenticated() {
     	return controllerHelper.getUserPrincipal() != null;
     }
+    
+    public boolean isProductOwner() {
+    	return isAuthenticated() 
+    			&& userService.findUserByUsername(getUsername()) instanceof ProductOwner;
+    }
 
 	public String getUsername() {
+		if(username == null && isAuthenticated()) {
+			username = controllerHelper.getUserPrincipal().getName();
+		}
 		return username;
 	}
 

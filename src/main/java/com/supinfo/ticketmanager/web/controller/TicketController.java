@@ -1,10 +1,11 @@
 package com.supinfo.ticketmanager.web.controller;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
@@ -21,10 +22,10 @@ import com.supinfo.ticketmanager.service.UserService;
 import fr.bargenson.util.faces.ControllerHelper;
 
 @Named
-@SessionScoped
-public class TicketController {
+@RequestScoped
+public class TicketController implements Serializable {
 	
-	protected static final String ADD_TICKET_OUTCOME = "newTickets";
+	protected static final String ADD_TICKET_OUTCOME = "newTickets?faces-redirect=true";
 
 	@Inject
 	private TicketService ticketService;

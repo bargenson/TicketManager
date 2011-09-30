@@ -1,8 +1,7 @@
-<web-app xmlns="http://java.sun.com/xml/ns/javaee"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-      version="3.0">
-      
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
+
 	<login-config>
 		<auth-method>FORM</auth-method>
 		<realm-name>TicketManagerRealm</realm-name>
@@ -11,12 +10,26 @@
 			<form-error-page>/login.xhtml</form-error-page>
 		</form-login-config>
 	</login-config>
-	
+
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>All</web-resource-name>
 			<url-pattern>/*</url-pattern>
 		</web-resource-collection>
 	</security-constraint>
-      
+
+	<context-param>
+		<param-name>org.richfaces.skin</param-name>
+		<param-value>plain</param-value>
+	</context-param>
+	
+	<context-param>
+		<param-name>org.richfaces.enableControlSkinning</param-name>
+		<param-value>false</param-value>
+	</context-param>
+	
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+
 </web-app>

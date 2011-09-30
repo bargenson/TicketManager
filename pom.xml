@@ -17,6 +17,7 @@
 		<version.shrinkwrap>1.0.0-beta-5</version.shrinkwrap>
 		<version.jsfunit>2.0.0.Beta2</version.jsfunit>
 		<version.arquillian.glassfish>1.0.0.CR1</version.arquillian.glassfish>
+		<version.richfaces>4.0.0.Final</version.richfaces>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -158,6 +159,16 @@
 			<version>${version.shrinkwrap}</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.richfaces.ui</groupId>
+			<artifactId>richfaces-components-ui</artifactId>
+			<version>${version.richfaces}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.richfaces.core</groupId>
+			<artifactId>richfaces-core-impl</artifactId>
+			<version>${version.richfaces}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -197,7 +208,7 @@
 				</configuration>
 				<executions>
 					<execution>
-						<id>PMD analyse</id>
+						<id>PMD analyze</id>
 						<goals>
 							<goal>check</goal>
 							<goal>cpd-check</goal>
@@ -216,7 +227,7 @@
 				</configuration>
 				<executions>
 					<execution>
-						<id>FindBugs analyse</id>
+						<id>FindBugs analyze</id>
 						<goals>
 							<goal>check</goal>
 						</goals>

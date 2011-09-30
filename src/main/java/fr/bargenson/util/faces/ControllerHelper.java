@@ -1,5 +1,6 @@
 package fr.bargenson.util.faces;
 
+import java.io.Serializable;
 import java.security.Principal;
 import java.util.ResourceBundle;
 
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
  * Time: 23:00
  */
 @Named
-public class ControllerHelper {
+public class ControllerHelper implements Serializable {
 	
 	public ControllerHelper() {
 		

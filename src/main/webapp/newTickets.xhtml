@@ -1,34 +1,65 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	template="/WEB-INF/templates/main.xhtml">
+	
+	<ui:define name="head">
+		<script src="scripts/jquery.tablesorter.min.js"></script>
+		<script >
+			$(function() {
+			  $("table.sortable").tablesorter({ sortList: [[1,0]] });
+			});
+		</script>
+	</ui:define>
 
-	<ui:define name="title">New Tickets</ui:define>
+	<ui:define name="title"><h:outputText value="#{msg['newTickets.page.title']}" /></ui:define>
 
 	<ui:define name="content">
-		<h:dataTable value="#{ticketController.newTicketsModel}" var="t">
-			<h:column>
-				<f:facet name="header">Ticket ID</f:facet> <!-- // TODO: Internationalize me ! -->
-				<h:outputText value="#{t.id}" />
-			</h:column>
-			<h:column>
-				<f:facet name="header">Summary</f:facet>
-				<h:outputText value="#{t.summary}" />
-			</h:column>
-			<h:column>
-				<f:facet name="header">Priority</f:facet>
-				<h:outputText value="#{msg[t.priority.bundleKey]}"/>
-			</h:column>
-			<h:column>
-				<f:facet name="header">Reported by</f:facet>
-				<h:outputText value="#{t.reporter.username}" />
-			</h:column>
-			<h:column>
-				<f:facet name="header">Status</f:facet>
-				<h:outputText value="#{msg[t.status.bundleKey]}" />
-			</h:column>
-		</h:dataTable>
+		<c:choose>
+			<c:when test="#{ticketController.newTicketsModel.rowAvailable}">
+				<h:dataTable value="#{ticketController.newTicketsModel}" var="t" styleClass="zebra-striped sortable">
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{msg['newTickets.id']}" />
+						</f:facet>
+						<h:outputText value="##{t.id}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{msg['newTickets.summary']}" />
+						</f:facet>
+						<h:outputText value="#{t.summary}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{msg['newTickets.priority']}" />
+						</f:facet>
+						<h:outputText value="#{msg[t.priority.bundleKey]}"/>
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{msg['newTickets.reporter']}" />
+						</f:facet>
+						<h:outputText value="#{t.reporter.firstName} #{t.reporter.lastName}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{msg['newTickets.creationDate']}" />
+						</f:facet>
+						<h:outputText value="#{t.createdAt}">
+							<f:convertDateTime type="both" timeStyle="short" dateStyle="short" />
+						</h:outputText>
+					</h:column>
+				</h:dataTable>
+			</c:when>
+			<c:otherwise>
+				<div class="alert-message warning">
+					<p><h:outputText value="#{msg['newTickets.noAvailable']}" /></p>
+				</div>
+			</c:otherwise>
+		</c:choose>
 	</ui:define>
 
 </ui:composition>

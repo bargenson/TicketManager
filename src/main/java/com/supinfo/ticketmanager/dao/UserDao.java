@@ -1,5 +1,6 @@
 package com.supinfo.ticketmanager.dao;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.Local;
@@ -15,7 +16,7 @@ import com.supinfo.ticketmanager.entity.User;
  * Time: 13:01
  */
 @Local
-public interface UserDao {
+public interface UserDao extends Serializable {
 	
 	<T extends User> T addUser(T user);
     User findUserByUsername(String username);

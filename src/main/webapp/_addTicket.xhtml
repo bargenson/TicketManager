@@ -1,0 +1,45 @@
+<h:form xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	
+	<fieldset>
+		<legend><h:outputText value="#{msg['form.addTicket.legend']}" /></legend>
+		<div class="clearfix">
+			<div class="input">
+				<rich:messages/>
+			</div>
+		</div>
+		<div class="clearfix">
+			<h:outputLabel for="summary" value="#{msg['form.addTicket.summary']}" />
+			<div class="input">
+				<h:inputText id="summary" value="#{ticketController.ticket.summary}">
+					<rich:validator />
+				</h:inputText>
+			</div>
+		</div>
+		<div class="clearfix">
+			<h:outputLabel for="description" value="#{msg['form.addTicket.description']}" />
+			<div class="input">
+				<h:inputTextarea id="description" value="#{ticketController.ticket.description}">
+					<rich:validator />
+				</h:inputTextarea>
+			</div>
+		</div>
+		<div class="clearfix">
+			<h:outputLabel for="priority" value="#{msg['form.addTicket.priority']}" />
+			<div class="input">
+				<h:selectOneMenu id="priority" value="#{ticketController.ticket.priority}">
+					<f:selectItems value="#{ticketController.priorityItems}" var="p" />
+				</h:selectOneMenu>
+			</div>
+		</div>
+		<div class="actions">
+			<a4j:commandButton id="submit" styleClass="btn primary" 
+				action="#{ticketController.addTicket}" value="#{msg['form.addTicket.submit']}" />
+		</div>
+	</fieldset>
+	
+</h:form>

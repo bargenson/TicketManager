@@ -1,5 +1,6 @@
 package com.supinfo.ticketmanager.service;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +18,7 @@ import com.supinfo.ticketmanager.entity.TicketStatus;
  * Time: 23:04
  */
 @Stateless
-public class TicketService {
+public class TicketService implements Serializable {
 	
 	@Inject
 	private TicketDao ticketDao;

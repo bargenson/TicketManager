@@ -20,7 +20,7 @@
 //import com.supinfo.ticketmanager.web.faces.mock.UserControllerMock;
 //
 //import fr.bargenson.util.faces.ControllerHelper;
-
+//
 //@RunWith(Arquillian.class)
 //public class JSFLoginPageTest {
 //	

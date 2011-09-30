@@ -1,5 +1,6 @@
 package com.supinfo.ticketmanager.service;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ import fr.bargenson.util.security.UserInfo;
  * Time: 11:46
  */
 @Stateless
-public class UserService extends AbstractLoginModule {
+public class UserService extends AbstractLoginModule implements Serializable {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
