@@ -10,6 +10,7 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -48,6 +49,9 @@ public class Ticket implements Serializable {
 
     @ManyToOne @JoinColumn
     private Developer developer;
+    
+    @OneToMany(mappedBy="ticket")
+    private List<Comment> comments;
 
 
     public Ticket() {
@@ -126,15 +130,23 @@ public class Ticket implements Serializable {
     public void setDeveloper(Developer developer) {
         this.developer = developer;
     }
+    
+    public List<Comment> getComments() {
+		return comments;
+	}
+    
+    public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
 
     @Override
 	public int hashCode() {
-		return HashCodeBuilder.reflectionHashCode(this, "id", "developer", "reporter");
+		return HashCodeBuilder.reflectionHashCode(this, "id", "developer", "reporter", "comments");
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		return EqualsBuilder.reflectionEquals(this, obj, "developer", "reporter");
+		return EqualsBuilder.reflectionEquals(this, obj, "developer", "reporter", "comments");
 	}
     
 }

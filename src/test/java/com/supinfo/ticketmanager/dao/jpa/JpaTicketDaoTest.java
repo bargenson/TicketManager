@@ -2,6 +2,7 @@ package com.supinfo.ticketmanager.dao.jpa;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.sql.Connection;
@@ -9,7 +10,8 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
-import javax.ejb.EJB;
+import javax.ejb.EJBException;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -28,11 +30,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.supinfo.ticketmanager.dao.TicketDao;
-import com.supinfo.ticketmanager.dao.jpa.JpaTicketDao;
 import com.supinfo.ticketmanager.entity.ProductOwner;
 import com.supinfo.ticketmanager.entity.Ticket;
 import com.supinfo.ticketmanager.entity.TicketPriority;
 import com.supinfo.ticketmanager.entity.TicketStatus;
+import com.supinfo.ticketmanager.exception.UnknownTicketException;
 
 import fr.bargenson.util.test.dbunit.DbUnitUtils;
 
@@ -49,7 +51,7 @@ public class JpaTicketDaoTest {
 	}
 
 	
-	@EJB TicketDao ticketDao;
+	@Inject TicketDao ticketDao;
 
 	@PersistenceContext EntityManager em;
 
@@ -67,38 +69,59 @@ public class JpaTicketDaoTest {
 
 	@Test
 	public void testAddTicket() {
-		ProductOwner po = new ProductOwner();
+		final ProductOwner po = new ProductOwner();
 		po.setId(1L);
 		
-		Ticket ticket = new Ticket(
+		final Ticket ticket = new Ticket(
 				"summary", "description", TicketPriority.CRITICAL, 
 				TicketStatus.NEW, new Date(), po
 		);
 		
-		Ticket persistedTicket = ticketDao.addTicket(ticket);
+		final Ticket persistedTicket = ticketDao.addTicket(ticket);
 		assertNotNull(persistedTicket);
 		assertNotNull(persistedTicket.getId());
 		
-		Ticket retrievedTicket = em.find(Ticket.class, persistedTicket.getId());
+		final Ticket retrievedTicket = em.find(Ticket.class, persistedTicket.getId());
 		assertEquals(persistedTicket, retrievedTicket);
 	}
 
 	@Test
 	public void testGetAllTickets() {
-		List<Ticket> tickets = ticketDao.getAllTickets();
+		final List<Ticket> tickets = ticketDao.getAllTickets();
 		assertNotNull(tickets);
 		assertEquals(1, tickets.size());
 	}
 
 	@Test
 	public void testGetAllTicketsByStatus() {
-		List<Ticket> newTickets = ticketDao.getAllTickets(TicketStatus.NEW);
+		final List<Ticket> newTickets = ticketDao.getAllTickets(TicketStatus.NEW);
 		assertNotNull(newTickets);
 		assertEquals(1, newTickets.size());
 
-		List<Ticket> inProgressTickets = ticketDao.getAllTickets(TicketStatus.IN_PROGRESS);
+		final List<Ticket> inProgressTickets = ticketDao.getAllTickets(TicketStatus.IN_PROGRESS);
 		assertNotNull(inProgressTickets);
 		assertEquals(0, inProgressTickets.size());
+	}
+	
+	@Test
+	public void testFindTicketById() {
+		final Long ticketId = 1L;
+		
+		Ticket ticket = ticketDao.findTicketById(ticketId);
+		
+		assertNotNull(ticket);
+		assertEquals(ticketId, ticket.getId());
+	}
+	
+	@Test(expected=UnknownTicketException.class)
+	public void testFindUnknownTicketById() {
+		final Long ticketId = 999L;
+		try {
+			ticketDao.findTicketById(ticketId);
+		} catch (EJBException e) {
+			assertTrue(e.getCause() instanceof UnknownTicketException);
+			throw (UnknownTicketException) e.getCause();
+		}
 	}
 
 }

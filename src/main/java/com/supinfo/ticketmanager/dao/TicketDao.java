@@ -15,5 +15,6 @@ public interface TicketDao extends Serializable {
 	List<Ticket> getAllTickets();
 	List<Ticket> getAllTickets(TicketStatus status);
 	void removeAllTickets();
+	Ticket findTicketById(Long l);
 
 }

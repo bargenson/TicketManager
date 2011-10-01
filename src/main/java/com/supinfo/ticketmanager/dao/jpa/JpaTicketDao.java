@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import com.supinfo.ticketmanager.dao.TicketDao;
 import com.supinfo.ticketmanager.entity.Ticket;
 import com.supinfo.ticketmanager.entity.TicketStatus;
+import com.supinfo.ticketmanager.exception.UnknownTicketException;
 
 @Stateless
 public class JpaTicketDao implements TicketDao {
@@ -39,6 +40,15 @@ public class JpaTicketDao implements TicketDao {
 	@Override
 	public void removeAllTickets() {
 		em.createQuery("DELETE FROM Ticket");
+	}
+
+	@Override
+	public Ticket findTicketById(Long id) {
+		Ticket ticket = em.find(Ticket.class, id);
+		if(ticket == null) {
+			throw new UnknownTicketException(id);
+		}
+		return ticket;
 	}
 
 }

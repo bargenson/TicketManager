@@ -33,6 +33,7 @@ public class TicketControllerTest {
 	private TicketController ticketController;
 	private Ticket ticketToAdd;
 	private Ticket addedTicket;
+	private Ticket ticketToFind;
 	private ProductOwner reporter;
 	private List<Ticket> newTickets;
 
@@ -57,6 +58,12 @@ public class TicketControllerTest {
 				);
 		addedTicket.setId(1L);
 
+		ticketToFind = new Ticket(
+				"summary", "description", TicketPriority.MINOR, 
+				TicketStatus.NEW, new Date(1234567890), null
+				);
+		ticketToFind.setId(1L);
+
 		initSimpleNewTickets();
 	}
 
@@ -65,6 +72,7 @@ public class TicketControllerTest {
 		TicketService ticketServiceMock = mock(TicketService.class);
 		when(ticketServiceMock.getTicketsByStatus(TicketStatus.NEW)).thenReturn(newTickets);
 		when(ticketServiceMock.addTicket(ticketToAdd)).thenReturn(addedTicket);
+		when(ticketServiceMock.findTicketById(ticketToFind.getId())).thenReturn(ticketToFind);
 
 		ReflectionHelper.inject(ticketController, "ticketService", ticketServiceMock);
 
@@ -89,6 +97,7 @@ public class TicketControllerTest {
 		Principal principalMock = mock(Principal.class);
 		when(principalMock.getName()).thenReturn(reporter.getUsername());
 		when(controllerHelperMock.getUserPrincipal()).thenReturn(principalMock);
+		when(controllerHelperMock.getRequestParam("ticketId")).thenReturn(ticketToFind.getId().toString());
 
 		ReflectionHelper.inject(ticketController, "controllerHelper", controllerHelperMock);
 	}
@@ -104,26 +113,32 @@ public class TicketControllerTest {
 	}
 
 	@Test
-	public void testGetTicket() {
-		Ticket ticket = ticketController.getTicket();
+	public void testGetNewTicket() {
+		Ticket ticket = ticketController.getNewTicket();
 
 		assertNotNull(ticket);
 
 		final String simpleSummary = "Summary";
-		ticketController.getTicket().setSummary(simpleSummary);
+		ticketController.getNewTicket().setSummary(simpleSummary);
 
-		assertEquals(simpleSummary, ticketController.getTicket().getSummary());
+		assertEquals(simpleSummary, ticketController.getNewTicket().getSummary());
+	}
+	
+	@Test
+	public void testGetTicketById() {
+		Ticket foundTicket = ticketController.getTicket();
+		assertEquals(ticketToFind, foundTicket);
 	}
 
 	@Test
 	public void testAddTicket() throws Exception {
-		ReflectionHelper.inject(ticketController, "ticket", ticketToAdd);
+		ReflectionHelper.inject(ticketController, "newTicket", ticketToAdd);
 
 		String outcome = ticketController.addTicket();
 
 		assertEquals(TicketController.ADD_TICKET_OUTCOME, outcome);
-		assertNotNull(ticketController.getTicket().getReporter());
-		assertEquals(reporter, ticketController.getTicket().getReporter());
+		assertNotNull(ticketController.getNewTicket().getReporter());
+		assertEquals(reporter, ticketController.getNewTicket().getReporter());
 	}
 
 	@Test

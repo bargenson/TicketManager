@@ -10,7 +10,8 @@ import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.ejb.EJB;
+import javax.ejb.EJBException;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -31,6 +32,7 @@ import com.supinfo.ticketmanager.dao.UserDao;
 import com.supinfo.ticketmanager.entity.Developer;
 import com.supinfo.ticketmanager.entity.ProductOwner;
 import com.supinfo.ticketmanager.entity.User;
+import com.supinfo.ticketmanager.exception.UnknownUserException;
 
 import fr.bargenson.util.test.dbunit.DbUnitUtils;
 
@@ -47,7 +49,7 @@ public class JpaUserDaoTest {
 	}
 	
 	
-	@EJB UserDao userDao;
+	@Inject UserDao userDao;
 	
 	@PersistenceContext EntityManager em;
 
@@ -95,6 +97,18 @@ public class JpaUserDaoTest {
 		final User developer = userDao.findUserByUsername(developerUsername);
 		assertNotNull(developer);
 		assertTrue(developer instanceof Developer);
+	}
+	
+	@Test(expected=UnknownUserException.class)
+	public void testFindUnknownUserByUsername() {
+		final String username = "Fake User";
+		
+		try {
+			userDao.findUserByUsername(username);
+		} catch (EJBException e) {
+			assertTrue(e.getCause() instanceof UnknownUserException);
+			throw (UnknownUserException) e.getCause();
+		}
 	}
 	
 	@Test

@@ -24,7 +24,9 @@
 						<f:facet name="header">
 							<h:outputText value="#{msg['newTickets.id']}" />
 						</f:facet>
-						<h:outputText value="##{t.id}" />
+						<h:outputLink value="showTicket.jsf?ticketId=#{t.id}">
+							<h:outputText value="##{t.id}" />
+						</h:outputLink>
 					</h:column>
 					<h:column>
 						<f:facet name="header">

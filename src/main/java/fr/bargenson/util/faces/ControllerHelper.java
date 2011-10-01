@@ -60,5 +60,9 @@ public class ControllerHelper implements Serializable {
 	public void logout() throws ServletException {
 		getHttpServletRequest().logout();
 	}
+	
+	public String getRequestParam(String paramName) {
+		return getHttpServletRequest().getParameter(paramName);
+	}
 
 }

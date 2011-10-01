@@ -33,5 +33,9 @@ public class TicketService implements Serializable {
 		ticket.setCreatedAt(new Date());
 		return ticketDao.addTicket(ticket);
 	}
+	
+	public Ticket findTicketById(Long ticketId) {
+		return ticketDao.findTicketById(ticketId);
+	}
 
 }

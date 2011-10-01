@@ -36,6 +36,7 @@ public class TicketController implements Serializable {
 	@Inject
 	private ControllerHelper controllerHelper;
 	
+	private Ticket newTicket;
 	private Ticket ticket;
 	private DataModel<Ticket> newTicketsModel;
 	private List<SelectItem> priorityItems;
@@ -47,18 +48,18 @@ public class TicketController implements Serializable {
 		return newTicketsModel;
 	}
 	
-	public Ticket getTicket() {
-		if(ticket == null) {
-			ticket = new Ticket();
+	public Ticket getNewTicket() {
+		if(newTicket == null) {
+			newTicket = new Ticket();
 		}
-		return ticket;
+		return newTicket;
 	}
 	
 	public String addTicket() {
 		String username = controllerHelper.getUserPrincipal().getName();
 		ProductOwner reporter = (ProductOwner) userService.findUserByUsername(username);
-		ticket.setReporter(reporter);
-		ticketService.addTicket(ticket);
+		newTicket.setReporter(reporter);
+		ticketService.addTicket(newTicket);
 		return ADD_TICKET_OUTCOME;
 	}
 	
@@ -71,6 +72,14 @@ public class TicketController implements Serializable {
 			}
 		}
 		return priorityItems;
+	}
+
+	public Ticket getTicket() {
+		if(ticket == null) {
+			String ticketIdParam = controllerHelper.getRequestParam("ticketId");
+			ticket = ticketService.findTicketById(Long.valueOf(ticketIdParam));
+		}
+		return ticket;
 	}
 	
 }
