@@ -93,7 +93,7 @@
                 </datasource>
                 <datasource jndi-name="java:jboss/datasource/TicketManager-DS" pool-name="TicketManager-DS" enabled="true" jta="true" use-java-context="true" use-ccm="true">
                     <connection-url>
-                        jdbc:mysql://127.1.10.1:3306/TicketManager
+                        jdbc:mysql://127.1.10.1:3306/ticketmanager
                     </connection-url>
                     <driver>
                         mysql
@@ -120,7 +120,7 @@
                             admin
                         </user-name>
                         <password>
-                            AyPEY2lrZjMg
+                            rW67b2Fqaytf
                         </password>
                     </security>
                 </datasource>
