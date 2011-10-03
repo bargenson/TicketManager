@@ -10,6 +10,8 @@ import javax.persistence.OneToMany;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+
 /**
  * Created by IntelliJ IDEA.
  * User: bargenson
@@ -47,6 +49,7 @@ public class ProductOwner extends User {
 	}
 
 	@Override
+	@SuppressWarnings
 	public boolean equals(Object obj) {
 		return EqualsBuilder.reflectionEquals(this, obj, "reportedTickets");
 	}

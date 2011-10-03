@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import com.supinfo.ticketmanager.dao.TicketDao;
@@ -16,13 +17,13 @@ public class JpaTicketDao implements TicketDao {
 
 	@PersistenceContext
 	private EntityManager em;
-	
+
 	@Override
 	public Ticket addTicket(Ticket ticket) {
 		em.persist(ticket);
 		return ticket;
 	}
-	
+
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Ticket> getAllTickets() {
@@ -43,12 +44,16 @@ public class JpaTicketDao implements TicketDao {
 	}
 
 	@Override
-	public Ticket findTicketById(Long id) {
-		Ticket ticket = em.find(Ticket.class, id);
-		if(ticket == null) {
-			throw new UnknownTicketException(id);
+	public Ticket findTicketWithCommentsById(Long id) {
+		try {
+			return (Ticket) em.createQuery(
+					"SELECT t FROM Ticket t LEFT JOIN FETCH t.comments WHERE t.id = :ticketId"
+					)
+					.setParameter("ticketId", id)
+					.getSingleResult();
+		} catch (NoResultException e) {
+			throw new UnknownTicketException(id, e);
 		}
-		return ticket;
 	}
 
 }

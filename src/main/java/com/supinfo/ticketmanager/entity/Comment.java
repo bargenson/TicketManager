@@ -42,9 +42,12 @@ public class Comment implements Serializable {
 
     }
 
-    public Comment(String content, Date createdAt, User author) {
+    public Comment(String content, Ticket ticket, Date createdAt, User author) {
         this.content = content;
-        this.createdAt = new Date(createdAt.getTime());
+        this.ticket = ticket;
+        if(createdAt != null) {
+        	this.createdAt = new Date(createdAt.getTime());
+        }
         this.author = author;
     }
 

@@ -4,6 +4,8 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.NotBlank;
 
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -63,7 +65,9 @@ public class Ticket implements Serializable {
         this.description = description;
         this.priority = priority;
         this.status = status;
-        this.createdAt = new Date(createdAt.getTime());
+        if(createdAt != null) {
+        	this.createdAt = new Date(createdAt.getTime());
+        }
         this.reporter = reporter;
     }
 
@@ -145,6 +149,7 @@ public class Ticket implements Serializable {
 	}
 
 	@Override
+	@SuppressWarnings
 	public boolean equals(Object obj) {
 		return EqualsBuilder.reflectionEquals(this, obj, "developer", "reporter", "comments");
 	}

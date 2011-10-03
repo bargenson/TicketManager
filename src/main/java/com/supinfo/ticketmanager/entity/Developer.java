@@ -7,6 +7,8 @@ import javax.persistence.OneToMany;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+
 import java.util.Date;
 import java.util.List;
 
@@ -47,6 +49,7 @@ public class Developer extends User {
 	}
 
 	@Override
+	@SuppressWarnings
 	public boolean equals(Object obj) {
 		return EqualsBuilder.reflectionEquals(this, obj, "ticketsInProgress");
 	}

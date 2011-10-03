@@ -31,30 +31,34 @@ import fr.bargenson.util.test.ReflectionHelper;
 public class TicketControllerTest {
 
 	private TicketController ticketController;
+	
+	private Ticket initialTicket;
 	private Ticket ticketToAdd;
 	private Ticket addedTicket;
 	private Ticket ticketToFind;
 	private ProductOwner reporter;
 	private List<Ticket> newTickets;
 
-
-	public TicketControllerTest() {
+	@Before
+	public void setUp() {
 		ticketController = new TicketController();
-
+		
 		reporter = new ProductOwner(
 				"username", "encryptedPassword", "firstName", 
 				"lastName", "email@email.fr", new Date(1234567890)
 				);
 		reporter.setId(1L);
 
+		initialTicket = new Ticket("summary", "description", TicketPriority.MINOR, null, null, null);
+		
 		ticketToAdd = new Ticket(
-				"summary", "description", TicketPriority.MINOR, 
-				TicketStatus.NEW, new Date(1234567890), null
+				initialTicket.getSummary(), initialTicket.getDescription(), 
+				initialTicket.getPriority(), null, null, reporter
 				);
 
 		addedTicket = new Ticket(
-				"summary", "description", TicketPriority.MINOR, 
-				TicketStatus.NEW, new Date(1234567890), reporter
+				ticketToAdd.getSummary(), ticketToAdd.getDescription(), 
+				ticketToAdd.getPriority(), TicketStatus.NEW, new Date(), reporter
 				);
 		addedTicket.setId(1L);
 
@@ -65,22 +69,59 @@ public class TicketControllerTest {
 		ticketToFind.setId(1L);
 
 		initSimpleNewTickets();
-	}
+	}	
 
-	@Before
-	public void setUp() throws Exception {
+	@Test
+	public void testGetNewTicketsModel() throws Exception {
 		TicketService ticketServiceMock = mock(TicketService.class);
 		when(ticketServiceMock.getTicketsByStatus(TicketStatus.NEW)).thenReturn(newTickets);
+		injectTicketService(ticketServiceMock);
+		
+		DataModel<Ticket> model = ticketController.getNewTicketsModel();
+
+		assertNotNull(model);
+
+		assertEquals(newTickets.size(), model.getRowCount());
+		assertEquals(newTickets, model.getWrappedData());
+	}
+
+	@Test
+	public void testGetTicket() {
+		Ticket ticket = ticketController.getTicket();
+
+		assertNotNull(ticket);
+
+		final String simpleSummary = "Summary";
+		ticketController.getTicket().setSummary(simpleSummary);
+
+		assertEquals(simpleSummary, ticketController.getTicket().getSummary());
+	}
+
+	@Test
+	public void testAddTicket() throws Exception {
+		ControllerHelper controllerHelperMock = mock(ControllerHelper.class);
+		Principal principalMock = mock(Principal.class);
+		when(principalMock.getName()).thenReturn(reporter.getUsername());
+		when(controllerHelperMock.getUserPrincipal()).thenReturn(principalMock);
+		injectControllerHelper(controllerHelperMock);
+
+		TicketService ticketServiceMock = mock(TicketService.class);
 		when(ticketServiceMock.addTicket(ticketToAdd)).thenReturn(addedTicket);
-		when(ticketServiceMock.findTicketById(ticketToFind.getId())).thenReturn(ticketToFind);
-
-		ReflectionHelper.inject(ticketController, "ticketService", ticketServiceMock);
-
+		injectTicketService(ticketServiceMock);
+		
 		UserService userServiceMock = mock(UserService.class);
 		when(userServiceMock.findUserByUsername(reporter.getUsername())).thenReturn(reporter);
+		injectUserService(userServiceMock);
+		
+		ticketController.setTicket(initialTicket);
 
-		ReflectionHelper.inject(ticketController, "userService", userServiceMock);
+		String outcome = ticketController.addTicket();
 
+		assertEquals(TicketController.ADD_TICKET_OUTCOME, outcome);
+	}
+
+	@Test
+	public void testGetPriorityItems() throws Exception {
 		ControllerHelper controllerHelperMock = mock(ControllerHelper.class);
 		when(controllerHelperMock.getResourceBundle("msg")).thenReturn(new ResourceBundle() {
 			
@@ -94,55 +135,8 @@ public class TicketControllerTest {
 				return null;
 			}
 		});
-		Principal principalMock = mock(Principal.class);
-		when(principalMock.getName()).thenReturn(reporter.getUsername());
-		when(controllerHelperMock.getUserPrincipal()).thenReturn(principalMock);
-		when(controllerHelperMock.getRequestParam("ticketId")).thenReturn(ticketToFind.getId().toString());
-
-		ReflectionHelper.inject(ticketController, "controllerHelper", controllerHelperMock);
-	}
-
-	@Test
-	public void testGetNewTicketsModel() {
-		DataModel<Ticket> model = ticketController.getNewTicketsModel();
-
-		assertNotNull(model);
-
-		assertEquals(newTickets.size(), model.getRowCount());
-		assertEquals(newTickets, model.getWrappedData());
-	}
-
-	@Test
-	public void testGetNewTicket() {
-		Ticket ticket = ticketController.getNewTicket();
-
-		assertNotNull(ticket);
-
-		final String simpleSummary = "Summary";
-		ticketController.getNewTicket().setSummary(simpleSummary);
-
-		assertEquals(simpleSummary, ticketController.getNewTicket().getSummary());
-	}
-	
-	@Test
-	public void testGetTicketById() {
-		Ticket foundTicket = ticketController.getTicket();
-		assertEquals(ticketToFind, foundTicket);
-	}
-
-	@Test
-	public void testAddTicket() throws Exception {
-		ReflectionHelper.inject(ticketController, "newTicket", ticketToAdd);
-
-		String outcome = ticketController.addTicket();
-
-		assertEquals(TicketController.ADD_TICKET_OUTCOME, outcome);
-		assertNotNull(ticketController.getNewTicket().getReporter());
-		assertEquals(reporter, ticketController.getNewTicket().getReporter());
-	}
-
-	@Test
-	public void testGetPriorityItems() {
+		injectControllerHelper(controllerHelperMock);
+		
 		List<SelectItem> items = ticketController.getPriorityItems();
 
 		assertNotNull(items);
@@ -168,6 +162,24 @@ public class TicketControllerTest {
 						TicketStatus.NEW, new Date(1234567890), null
 						)
 				);
+	}
+	
+	private void injectTicketService(TicketService ticketService)
+			throws IllegalAccessException, NoSuchFieldException {
+
+		ReflectionHelper.inject(ticketController, "ticketService", ticketService);
+	}
+	
+	private void injectUserService(UserService userService)
+			throws IllegalAccessException, NoSuchFieldException {
+		
+		ReflectionHelper.inject(ticketController, "userService", userService);
+	}
+	
+	private void injectControllerHelper(ControllerHelper controllerHelperMock)
+			throws IllegalAccessException, NoSuchFieldException {
+		
+		ReflectionHelper.inject(ticketController, "controllerHelper", controllerHelperMock);
 	}
 
 }

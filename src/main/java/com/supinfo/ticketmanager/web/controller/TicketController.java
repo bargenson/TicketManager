@@ -25,6 +25,9 @@ import fr.bargenson.util.faces.ControllerHelper;
 @RequestScoped
 public class TicketController implements Serializable {
 	
+	private static final long serialVersionUID = 354054054054L;
+	
+	
 	protected static final String ADD_TICKET_OUTCOME = "newTickets?faces-redirect=true";
 
 	@Inject
@@ -36,10 +39,9 @@ public class TicketController implements Serializable {
 	@Inject
 	private ControllerHelper controllerHelper;
 	
-	private Ticket newTicket;
 	private Ticket ticket;
-	private DataModel<Ticket> newTicketsModel;
-	private List<SelectItem> priorityItems;
+	private transient DataModel<Ticket> newTicketsModel;
+	private transient List<SelectItem> priorityItems;
 	
 	public DataModel<Ticket> getNewTicketsModel() {
 		if(newTicketsModel == null) {
@@ -48,18 +50,11 @@ public class TicketController implements Serializable {
 		return newTicketsModel;
 	}
 	
-	public Ticket getNewTicket() {
-		if(newTicket == null) {
-			newTicket = new Ticket();
-		}
-		return newTicket;
-	}
-	
 	public String addTicket() {
 		String username = controllerHelper.getUserPrincipal().getName();
 		ProductOwner reporter = (ProductOwner) userService.findUserByUsername(username);
-		newTicket.setReporter(reporter);
-		ticketService.addTicket(newTicket);
+		ticket.setReporter(reporter);
+		ticketService.addTicket(ticket);
 		return ADD_TICKET_OUTCOME;
 	}
 	
@@ -76,10 +71,13 @@ public class TicketController implements Serializable {
 
 	public Ticket getTicket() {
 		if(ticket == null) {
-			String ticketIdParam = controllerHelper.getRequestParam("ticketId");
-			ticket = ticketService.findTicketById(Long.valueOf(ticketIdParam));
+			ticket = new Ticket();
 		}
 		return ticket;
+	}
+	
+	public void setTicket(Ticket ticket) {
+		this.ticket = ticket;
 	}
 	
 }

@@ -1,6 +1,7 @@
 package com.supinfo.ticketmanager.dao.jpa;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -107,17 +108,20 @@ public class JpaTicketDaoTest {
 	public void testFindTicketById() {
 		final Long ticketId = 1L;
 		
-		Ticket ticket = ticketDao.findTicketById(ticketId);
+		Ticket ticket = ticketDao.findTicketWithCommentsById(ticketId);
 		
 		assertNotNull(ticket);
 		assertEquals(ticketId, ticket.getId());
+		assertNotNull(ticket.getComments());
+		assertFalse(ticket.getComments().isEmpty());
+		assertEquals(1, ticket.getComments().size());
 	}
 	
 	@Test(expected=UnknownTicketException.class)
 	public void testFindUnknownTicketById() {
 		final Long ticketId = 999L;
 		try {
-			ticketDao.findTicketById(ticketId);
+			ticketDao.findTicketWithCommentsById(ticketId);
 		} catch (EJBException e) {
 			assertTrue(e.getCause() instanceof UnknownTicketException);
 			throw (UnknownTicketException) e.getCause();

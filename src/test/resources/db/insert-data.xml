@@ -10,4 +10,6 @@
 	<Ticket id="1" summary="Blabla" description="blabla++" priority="TRIVIAL"
 		status="NEW" createdAt="1986-01-21" reporter_id="1" developer_id="2" />
 		
+	<Comment id="1" content="Blabla" createdAt="1986-01-21" ticket_id="1" author_id="2" />
+		
 </dataset>

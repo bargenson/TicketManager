@@ -35,7 +35,7 @@ public class TicketService implements Serializable {
 	}
 	
 	public Ticket findTicketById(Long ticketId) {
-		return ticketDao.findTicketById(ticketId);
+		return ticketDao.findTicketWithCommentsById(ticketId);
 	}
 
 }
