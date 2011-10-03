@@ -1,0 +1,6 @@
+Markers
+===========
+
+Adding marker files to this directory will have the following effects:
+
+skip_maven_build - Maven build step will be skipped
