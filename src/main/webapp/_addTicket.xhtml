@@ -15,7 +15,7 @@
 		<div class="clearfix">
 			<h:outputLabel for="summary" value="#{msg['addTicket.summary']}" />
 			<div class="input">
-				<h:inputText id="summary" value="#{ticketController.newTicket.summary}">
+				<h:inputText id="summary" value="#{ticketController.ticket.summary}">
 					<rich:validator />
 				</h:inputText>
 			</div>
@@ -23,7 +23,7 @@
 		<div class="clearfix">
 			<h:outputLabel for="description" value="#{msg['addTicket.description']}" />
 			<div class="input">
-				<h:inputTextarea id="description" value="#{ticketController.newTicket.description}">
+				<h:inputTextarea id="description" value="#{ticketController.ticket.description}">
 					<rich:validator />
 				</h:inputTextarea>
 			</div>
@@ -31,7 +31,7 @@
 		<div class="clearfix">
 			<h:outputLabel for="priority" value="#{msg['addTicket.priority']}" />
 			<div class="input">
-				<h:selectOneMenu id="priority" value="#{ticketController.newTicket.priority}">
+				<h:selectOneMenu id="priority" value="#{ticketController.ticket.priority}">
 					<f:selectItems value="#{ticketController.priorityItems}" var="p" />
 				</h:selectOneMenu>
 			</div>
