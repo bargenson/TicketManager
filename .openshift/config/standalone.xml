@@ -216,10 +216,10 @@
 
     <interfaces>
         <interface name="management">
-            <loopback-address value="127.1.23.129"/>
+            <loopback-address value="127.1.10.1"/>
         </interface>
         <interface name="public">
-            <loopback-address value="127.1.23.129"/>
+            <loopback-address value="127.1.10.1"/>
         </interface>
     </interfaces>
 
