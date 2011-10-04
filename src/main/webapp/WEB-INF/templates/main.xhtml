@@ -2,7 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
 
 	<h:head>
 		<meta charset="UTF-8" />
@@ -77,9 +79,9 @@
 								</h:outputLink>
 							</li>
 						</ul>
-						<form class="pull-left" action="">
-							<input type="text" placeholder="Search" />
-						</form>
+						<h:form class="pull-left">
+							<h:inputText value="" placeholder="Search" />
+						</h:form>
 						<ul class="nav secondary-nav">
 							<li>
 								<h:outputLink value="login.jsf"
@@ -100,6 +102,7 @@
 		</header>
 		
 		<section style="margin-top: 80px;">
+			<rich:messages rendered="false" /> <!-- TODO : Replace that by... a better solution ^^ -->
 			<ui:insert name="content" />
 		</section>
 	
