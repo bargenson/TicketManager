@@ -20,7 +20,7 @@ public class Bootstrap implements ServletContextListener {
 	@Inject
 	private UserDao userDao;
 	
-	private MD5Digester digester = new MD5Digester()
+	private MD5Digester digester = new MD5Digester();
 	
 	@Override
 	public void contextInitialized(ServletContextEvent event) {

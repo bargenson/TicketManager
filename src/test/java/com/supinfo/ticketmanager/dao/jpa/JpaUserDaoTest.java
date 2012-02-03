@@ -121,7 +121,7 @@ public class JpaUserDaoTest {
 		
 		final List<User> usersAfterAdd = userDao.getAllUsers();
 		assertNotNull(usersAfterAdd);
-		assertEquals(4, usersAfterAdd.size());
+		assertEquals(3, usersAfterAdd.size());
 	}
 	
 	@Test
