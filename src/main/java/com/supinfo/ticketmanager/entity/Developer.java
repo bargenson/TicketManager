@@ -22,7 +22,7 @@ import java.util.List;
 @DiscriminatorValue("DEVELOPER")
 public class Developer extends User {
 
-    @OneToMany
+    @OneToMany(mappedBy = "developer")
     private List<Ticket> ticketsInProgress;
 
     public Developer() {

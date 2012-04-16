@@ -89,10 +89,13 @@
 				<p>
 					<h:outputText value="#{ticketController.ticket.description}" />
 				</p>
+                <h:form rendered="#{userController.developer and (empty ticketController.ticket.developer)}">
+                    <a4j:commandButton action="#{ticketController.takeTicket}" value="#{msg['showTicket.takeTicket']}" styleClass="btn btn-primary" />
+                </h:form>
 			</section>
 			<section id="comments">
 				<h5><h:outputText value="#{msg['showTicket.comments']}" /></h5>
-				<h:outputLink id="addCommentLink" value="#" styleClass="btn info" data-controls-modal="modal-from-dom" rendered="#{userController.authenticated}">
+				<h:outputLink id="addCommentLink" value="#" styleClass="btn info" rendered="#{userController.authenticated}">
 					<h:outputText value="#{msg['showTicket.addComment']}" />
 				</h:outputLink>	
 				<c:forEach items="#{ticketController.ticket.comments}" var="comment">

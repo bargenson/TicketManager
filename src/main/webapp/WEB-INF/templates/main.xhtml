@@ -44,6 +44,16 @@
                                 </h:outputLink>
                             </li>
                             <li>
+                                <h:outputLink value="allTickets.jsf">
+                                    <h:outputText value="#{msg['template.main.menu.allTickets']}" />
+                                </h:outputLink>
+                            </li>
+                            <li>
+                                <h:outputLink value="myTickets.jsf" rendered="#{userController.developer}">
+                                    <h:outputText value="#{msg['template.main.menu.myTickets']}" />
+                                </h:outputLink>
+                            </li>
+                            <li>
                                 <h:outputLink id="addTicketLink" value="#MyModal" rendered="#{userController.productOwner}">
                                     <h:outputText value="#{msg['template.main.menu.addTicket']}" />
                                 </h:outputLink>

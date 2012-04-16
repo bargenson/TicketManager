@@ -11,4 +11,7 @@ public final class UserRole {
     public final static String DEVELOPER = "DEVELOPER";
     public final static String PRODUCT_OWNER = "PRODUCT_OWNER";
 
+    private UserRole() {
+        throw new IllegalStateException();
+    }
 }

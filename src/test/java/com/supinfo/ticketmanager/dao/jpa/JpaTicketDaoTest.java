@@ -16,6 +16,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import com.supinfo.ticketmanager.entity.*;
 import org.dbunit.DatabaseUnitException;
 import org.hibernate.Session;
 import org.hibernate.ejb.EntityManagerImpl;
@@ -31,10 +32,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.supinfo.ticketmanager.dao.TicketDao;
-import com.supinfo.ticketmanager.entity.ProductOwner;
-import com.supinfo.ticketmanager.entity.Ticket;
-import com.supinfo.ticketmanager.entity.TicketPriority;
-import com.supinfo.ticketmanager.entity.TicketStatus;
 import com.supinfo.ticketmanager.exception.UnknownTicketException;
 
 import fr.bargenson.util.test.dbunit.DbUnitUtils;
@@ -70,7 +67,9 @@ public class JpaTicketDaoTest {
 
 	@Test
 	public void testAddTicket() {
-		final ProductOwner po = new ProductOwner();
+		final Date beforePersistDate = new Date();
+
+        final ProductOwner po = new ProductOwner();
 		po.setId(1L);
 		
 		final Ticket ticket = new Ticket(
@@ -81,27 +80,47 @@ public class JpaTicketDaoTest {
 		final Ticket persistedTicket = ticketDao.addTicket(ticket);
 		assertNotNull(persistedTicket);
 		assertNotNull(persistedTicket.getId());
-		
+        assertTrue(persistedTicket.getCreatedAt().after(beforePersistDate));
+        assertTrue(persistedTicket.getCreatedAt().before(new Date()));
+
 		final Ticket retrievedTicket = em.find(Ticket.class, persistedTicket.getId());
 		assertEquals(persistedTicket, retrievedTicket);
 	}
+
+    @Test
+    public void testUpdateTicket() {
+        final long ticketId = 1L;
+        final String summary = "New Summary";
+        final TicketStatus status = TicketStatus.DONE;
+
+        final Ticket ticket = em.find(Ticket.class, ticketId);
+        ticket.setSummary(summary);
+        ticket.setStatus(status);
+
+        ticketDao.updateTicket(ticket);
+
+        final Ticket updatedTicket = em.find(Ticket.class, ticketId);
+        assertNotNull(updatedTicket);
+        assertEquals(summary, updatedTicket.getSummary());
+        assertEquals(status, updatedTicket.getStatus());
+    }
 
 	@Test
 	public void testGetAllTickets() {
 		final List<Ticket> tickets = ticketDao.getAllTickets();
 		assertNotNull(tickets);
-		assertEquals(1, tickets.size());
+		assertEquals(3, tickets.size());
 	}
 
 	@Test
 	public void testGetAllTicketsByStatus() {
 		final List<Ticket> newTickets = ticketDao.getAllTickets(TicketStatus.NEW);
 		assertNotNull(newTickets);
-		assertEquals(1, newTickets.size());
+		assertEquals(2, newTickets.size());
 
 		final List<Ticket> inProgressTickets = ticketDao.getAllTickets(TicketStatus.IN_PROGRESS);
 		assertNotNull(inProgressTickets);
-		assertEquals(0, inProgressTickets.size());
+		assertEquals(1, inProgressTickets.size());
 	}
 	
 	@Test
@@ -127,5 +146,13 @@ public class JpaTicketDaoTest {
 			throw (UnknownTicketException) e.getCause();
 		}
 	}
+
+    @Test
+    public void testGetTicketsByDeveloper() {
+        final Developer developer = em.find(Developer.class, 2L);
+        final List<Ticket> tickets = ticketDao.getTicketsByDeveloper(developer);
+        assertNotNull(tickets);
+        assertEquals(2, tickets.size());
+    }
 
 }

@@ -8,15 +8,10 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import com.supinfo.ticketmanager.dao.TicketDao;
+import com.supinfo.ticketmanager.entity.Developer;
 import com.supinfo.ticketmanager.entity.Ticket;
 import com.supinfo.ticketmanager.entity.TicketStatus;
 
-/**
- * Created by IntelliJ IDEA.
- * User: bargenson
- * Date: 30/08/11
- * Time: 23:04
- */
 @Stateless
 public class TicketService implements Serializable {
 	
@@ -38,4 +33,17 @@ public class TicketService implements Serializable {
 		return ticketDao.findTicketWithCommentsById(ticketId);
 	}
 
+    public void assignTicket(Ticket ticket, Developer developer) {
+        ticket.setDeveloper(developer);
+        ticket.setStatus(TicketStatus.IN_PROGRESS);
+        ticketDao.updateTicket(ticket);
+    }
+
+    public List<Ticket> getAllTickets() {
+        return ticketDao.getAllTickets();
+    }
+
+    public List<Ticket> getTicketsByDeveloper(Developer developer) {
+        return ticketDao.getTicketsByDeveloper(developer);
+    }
 }

@@ -3,70 +3,12 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	template="/WEB-INF/templates/main.xhtml">
+	template="/WEB-INF/templates/tickets.xhtml">
 
-    <ui:define name="head">
-        <link rel="stylesheet" href="#{facesContext.externalContext.request.contextPath}/css/jquery-tablesorter.css"/>
+	<ui:define name="title">
+        <h:outputText value="#{msg['newTickets.page.title']}" />
     </ui:define>
-	<ui:define name="scripts">
-		<script type="text/javascript" src="#{facesContext.externalContext.request.contextPath}/scripts/jquery.tablesorter.js" />
-        <c:if test="#{ticketController.newTicketsModel.rowAvailable}">
-		    <script type="text/javascript">
-                $(document).ready( function() {
-                    $("table.tablesorter").tablesorter({ sortList: [[1,0]] });
-                });
-		    </script>
-        </c:if>
-	</ui:define>
 
-	<ui:define name="title"><h:outputText value="#{msg['newTickets.page.title']}" /></ui:define>
-
-	<ui:define name="content">
-		<c:choose>
-			<c:when test="#{ticketController.newTicketsModel.rowAvailable}">
-				<h:dataTable value="#{ticketController.newTicketsModel}" var="t" styleClass="table table-striped tablesorter">
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="#{msg['newTickets.id']}" />
-						</f:facet>
-						<h:outputLink value="showTicket.jsf?ticketId=#{t.id}">
-							<h:outputText value="##{t.id}" />
-						</h:outputLink>
-					</h:column>
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="#{msg['newTickets.summary']}" />
-						</f:facet>
-						<h:outputText value="#{t.summary}" />
-					</h:column>
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="#{msg['newTickets.priority']}" />
-						</f:facet>
-						<h:outputText value="#{msg[t.priority.bundleKey]}"/>
-					</h:column>
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="#{msg['newTickets.reporter']}" />
-						</f:facet>
-						<h:outputText value="#{t.reporter.firstName} #{t.reporter.lastName}" />
-					</h:column>
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="#{msg['newTickets.creationDate']}" />
-						</f:facet>
-						<h:outputText value="#{t.createdAt}">
-							<f:convertDateTime type="both" timeStyle="short" dateStyle="short" />
-						</h:outputText>
-					</h:column>
-				</h:dataTable>
-			</c:when>
-			<c:otherwise>
-				<div class="alert-message warning">
-					<p><h:outputText value="#{msg['newTickets.noAvailable']}" /></p>
-				</div>
-			</c:otherwise>
-		</c:choose>
-	</ui:define>
+    <ui:param name="ticketsModel" value="#{ticketController.newTicketsModel}" />
 
 </ui:composition>
