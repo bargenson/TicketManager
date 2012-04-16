@@ -11,20 +11,22 @@
 		<f:viewParam name="ticketId" value="#{ticketController.ticket}" converter="#{ticketConverter}"/>
 	</f:metadata>
 
-	<ui:define name="head">
+	<ui:define name="scripts">
 		<script type="text/javascript">
 			$(document).ready( function() {
 				$('#addCommentLink').click( function() {
 					$.ajax({
 						url: "_addComment.jsf?ticketId=#{ticketController.ticket.id}",
 						success: function(html) {
-							$('#modal-from-dom-body').html(html);
-							$('#modal-from-dom').modal('toggle');
+							$('#myModalBody').html(html);
+							$('#myModal').modal();
 						}
 					});
 				});
 			});
 		</script>
+    </ui:define>
+    <ui:define name="head">
 		<style type="text/css">
 			article header h2 {
 				text-align: center;

@@ -30,7 +30,7 @@ public class Bootstrap implements ServletContextListener {
 				);
 		
 		ProductOwner productOwner = new ProductOwner(
-				"ProductOwner", digester.digest("popo"), "Steve", 
+				"ProductOwner", digester.digest("popo"), "Steve",
 				"Jobs", "steve@apple.com", new Date()
 				);
 		

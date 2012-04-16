@@ -26,7 +26,7 @@ public class UserController implements Serializable {
 	
 	protected static final String LOGIN_SUCCEED_OUTCOME = "newTickets?faces-redirect=true";
 	protected static final String LOGIN_FAILED_OUTCOME = null;
-	protected static final String LOGOUT_OUTCOME = "login";
+	protected static final String LOGOUT_OUTCOME = "login?faces-redirect=true";
 	
 	
 	@Inject
