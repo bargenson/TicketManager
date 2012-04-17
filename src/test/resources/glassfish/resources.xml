@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE resources PUBLIC
+        "-//GlassFish.org//DTD GlassFish Application Server 3.1 Resource Definitions//EN"
+        "http://glassfish.org/dtds/glassfish-resources_1_5.dtd">
+<resources>
+    <jdbc-resource pool-name="HsqldbPool" jndi-name="jdbc/ticketmanager"
+                   object-type="user" enabled="true"/>
+    <jdbc-connection-pool
+            is-isolation-level-guaranteed="false" name="HsqldbPool"
+            driver-classname="org.hsqldb.jdbcDriver" res-type="java.sql.Driver">
+        <property value="9001" name="PortNumber"/>
+        <property value="" name="Password"/>
+        <property value="sa" name="User"/>
+        <property value="localhost" name="serverName"/>
+        <property value="jdbc:hsqldb:mem:ticketmanagerbar" name="URL"/>
+    </jdbc-connection-pool>
+</resources>

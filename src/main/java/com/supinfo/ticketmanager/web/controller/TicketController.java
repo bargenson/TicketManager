@@ -22,6 +22,8 @@ import fr.bargenson.util.faces.ControllerHelper;
 @RequestScoped
 public class TicketController implements Serializable {
 
+    private static final long serialVersionUID = 354054054054L;
+
 	protected static final String ADD_TICKET_OUTCOME = "newTickets?faces-redirect=true";
     protected static final String TAKE_TICKET_OUTCOME = "showTicket?faces-redirect=true&includeViewParams=true";
 

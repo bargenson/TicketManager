@@ -13,10 +13,6 @@
 	</scm>
 
 	<properties>
-		<version.arquillian>1.0.0.CR4</version.arquillian>
-		<version.shrinkwrap>1.0.0-beta-5</version.shrinkwrap>
-		<version.jsfunit>2.0.0.Beta2</version.jsfunit>
-		<version.arquillian.glassfish>1.0.0.CR1</version.arquillian.glassfish>
 		<version.richfaces>4.0.0.Final</version.richfaces>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -26,17 +22,9 @@
 			<id>jboss-public-repository-group</id>
 			<name>JBoss Public Maven Repository Group</name>
 			<url>https://repository.jboss.org/nexus/content/groups/public</url>
-			<layout>default</layout>
-			<releases>
-				<enabled>true</enabled>
-				<updatePolicy>never</updatePolicy>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>never</updatePolicy>
-			</snapshots>
-		</repository>
+  		</repository>
 	</repositories>
+
 	<pluginRepositories>
 		<pluginRepository>
 			<id>jboss-public-repository-group</id>
@@ -51,6 +39,18 @@
 		</pluginRepository>
 	</pluginRepositories>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.jboss.arquillian</groupId>
+                <artifactId>arquillian-bom</artifactId>
+                <version>1.0.0.Final</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -61,7 +61,7 @@
 		<dependency>
 			<groupId>org.jboss.arquillian.junit</groupId>
 			<artifactId>arquillian-junit-container</artifactId>
-			<version>${version.arquillian}</version>
+			<version>1.0.0.Final</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -107,7 +107,7 @@
 		<dependency>
 			<groupId>org.jboss.arquillian.container</groupId>
 			<artifactId>arquillian-glassfish-embedded-3.1</artifactId>
-			<version>${version.arquillian.glassfish}</version>
+			<version>1.0.0.CR1</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -146,24 +146,6 @@
 			<groupId>commons-beanutils</groupId>
 			<artifactId>commons-beanutils</artifactId>
 			<version>1.8.3</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.jsfunit</groupId>
-			<artifactId>jsfunit-arquillian</artifactId>
-			<version>${version.jsfunit}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.jsfunit</groupId>
-			<artifactId>jboss-jsfunit-core</artifactId>
-			<version>${version.jsfunit}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.shrinkwrap</groupId>
-			<artifactId>shrinkwrap-impl-base</artifactId>
-			<version>${version.shrinkwrap}</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.richfaces.ui</groupId>

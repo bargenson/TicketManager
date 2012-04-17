@@ -80,8 +80,8 @@ public class JpaTicketDaoTest {
 		final Ticket persistedTicket = ticketDao.addTicket(ticket);
 		assertNotNull(persistedTicket);
 		assertNotNull(persistedTicket.getId());
-        assertTrue(persistedTicket.getCreatedAt().after(beforePersistDate));
-        assertTrue(persistedTicket.getCreatedAt().before(new Date()));
+        assertFalse(persistedTicket.getCreatedAt().before(beforePersistDate));
+        assertFalse(persistedTicket.getCreatedAt().after(new Date()));
 
 		final Ticket retrievedTicket = em.find(Ticket.class, persistedTicket.getId());
 		assertEquals(persistedTicket, retrievedTicket);
