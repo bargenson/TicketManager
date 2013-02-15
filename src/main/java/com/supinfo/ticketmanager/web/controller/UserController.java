@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletException;
 
+import com.supinfo.ticketmanager.entity.Developer;
 import org.hibernate.validator.constraints.NotBlank;
 
 import com.supinfo.ticketmanager.entity.ProductOwner;
@@ -14,19 +15,14 @@ import com.supinfo.ticketmanager.service.UserService;
 
 import fr.bargenson.util.faces.ControllerHelper;
 
-/**
- * Created by IntelliJ IDEA.
- * User: bargenson
- * Date: 30/08/11
- * Time: 13:04
- */
+
 @Named
 @RequestScoped
 public class UserController implements Serializable {
 	
 	protected static final String LOGIN_SUCCEED_OUTCOME = "newTickets?faces-redirect=true";
 	protected static final String LOGIN_FAILED_OUTCOME = null;
-	protected static final String LOGOUT_OUTCOME = "login";
+	protected static final String LOGOUT_OUTCOME = "login?faces-redirect=true";
 	
 	
 	@Inject
@@ -68,6 +64,11 @@ public class UserController implements Serializable {
     public boolean isProductOwner() {
     	return isAuthenticated() 
     			&& userService.findUserByUsername(getUsername()) instanceof ProductOwner;
+    }
+
+    public boolean isDeveloper() {
+    	return isAuthenticated()
+    			&& userService.findUserByUsername(getUsername()) instanceof Developer;
     }
 
 	public String getUsername() {

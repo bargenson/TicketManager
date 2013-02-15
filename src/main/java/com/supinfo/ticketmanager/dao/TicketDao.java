@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import com.supinfo.ticketmanager.entity.Developer;
 import com.supinfo.ticketmanager.entity.Ticket;
 import com.supinfo.ticketmanager.entity.TicketStatus;
 
@@ -16,5 +17,6 @@ public interface TicketDao extends Serializable {
 	List<Ticket> getAllTickets(TicketStatus status);
 	void removeAllTickets();
 	Ticket findTicketWithCommentsById(Long l);
-
+    void updateTicket(Ticket ticket);
+    List<Ticket> getTicketsByDeveloper(Developer developer);
 }

@@ -7,8 +7,14 @@
 		email="linus@ticketmanager.com" encryptedPassword="plop" firstName="Linus"
 		lastName="Torvald" username="Developer" />
 
-	<Ticket id="1" summary="Blabla" description="blabla++" priority="TRIVIAL"
+	<Ticket id="1" summary="Blabla1" description="blabla++" priority="TRIVIAL"
 		status="NEW" createdAt="1986-01-21" reporter_id="1" developer_id="2" />
+
+    <Ticket id="2" summary="Blabla2" description="blabla++" priority="TRIVIAL"
+            status="NEW" createdAt="1990-01-21" reporter_id="1" developer_id="2" />
+
+    <Ticket id="3" summary="Blabla3" description="blabla++" priority="TRIVIAL"
+            status="IN_PROGRESS" createdAt="1987-01-21" reporter_id="1" />
 		
 	<Comment id="1" content="Blabla" createdAt="1986-01-21" ticket_id="1" author_id="2" />
 		

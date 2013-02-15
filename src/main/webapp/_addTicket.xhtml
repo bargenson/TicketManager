@@ -3,41 +3,42 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:a4j="http://richfaces.org/a4j"
-	xmlns:rich="http://richfaces.org/rich">
+	xmlns:rich="http://richfaces.org/rich"
+    styleClass="form-horizontal">
 	
 	<fieldset>
 		<legend><h:outputText value="#{msg['addTicket.legend']}" /></legend>
-		<div class="clearfix">
-  			<div class="input">
+		<div class="control-group">
+  			<div class="controls">
   				<rich:messages />
   			</div>
   		</div>
-		<div class="clearfix">
-			<h:outputLabel for="summary" value="#{msg['addTicket.summary']}" />
-			<div class="input">
+		<div class="control-group">
+			<h:outputLabel styleClass="control-label" for="summary" value="#{msg['addTicket.summary']}" />
+			<div class="controls">
 				<h:inputText id="summary" value="#{ticketController.ticket.summary}">
 					<rich:validator />
 				</h:inputText>
 			</div>
 		</div>
-		<div class="clearfix">
-			<h:outputLabel for="description" value="#{msg['addTicket.description']}" />
-			<div class="input">
+		<div class="control-group">
+			<h:outputLabel styleClass="control-label" for="description" value="#{msg['addTicket.description']}" />
+			<div class="controls">
 				<h:inputTextarea id="description" value="#{ticketController.ticket.description}">
 					<rich:validator />
 				</h:inputTextarea>
 			</div>
 		</div>
-		<div class="clearfix">
-			<h:outputLabel for="priority" value="#{msg['addTicket.priority']}" />
-			<div class="input">
+		<div class="control-group">
+			<h:outputLabel styleClass="control-label" for="priority" value="#{msg['addTicket.priority']}" />
+			<div class="controls">
 				<h:selectOneMenu id="priority" value="#{ticketController.ticket.priority}">
 					<f:selectItems value="#{ticketController.priorityItems}" var="p" />
 				</h:selectOneMenu>
 			</div>
 		</div>
-		<div class="actions">
-			<a4j:commandButton id="submit" styleClass="btn primary" 
+		<div class="form-actions">
+			<a4j:commandButton id="submit" styleClass="btn btn-primary"
 				action="#{ticketController.addTicket}" value="#{msg['addTicket.submit']}" />
 		</div>
 	</fieldset>

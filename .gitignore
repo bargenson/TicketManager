@@ -1,5 +1,10 @@
-.classpath
-.project
-.settings
+# Ignore all dotfiles...
+.*
+# except for .gitignore and .openshift
+!.gitignore
+!.openshift
+
 target
-deployments/
+deployments
+rebel.xml
+*.iml

@@ -1,16 +1,16 @@
 package com.supinfo.ticketmanager.dao.jpa;
 
-import java.util.List;
+import com.supinfo.ticketmanager.dao.TicketDao;
+import com.supinfo.ticketmanager.entity.Developer;
+import com.supinfo.ticketmanager.entity.Ticket;
+import com.supinfo.ticketmanager.entity.TicketStatus;
+import com.supinfo.ticketmanager.exception.UnknownTicketException;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-
-import com.supinfo.ticketmanager.dao.TicketDao;
-import com.supinfo.ticketmanager.entity.Ticket;
-import com.supinfo.ticketmanager.entity.TicketStatus;
-import com.supinfo.ticketmanager.exception.UnknownTicketException;
+import java.util.List;
 
 @Stateless
 public class JpaTicketDao implements TicketDao {
@@ -55,5 +55,17 @@ public class JpaTicketDao implements TicketDao {
 			throw new UnknownTicketException(id, e);
 		}
 	}
+
+    @Override
+    public void updateTicket(Ticket ticket) {
+        em.merge(ticket);
+    }
+
+    @Override
+    public List<Ticket> getTicketsByDeveloper(Developer developer) {
+        return em.createQuery("SELECT d.ticketsInProgress FROM Developer d WHERE d = :developer")
+                .setParameter("developer", developer)
+                .getResultList();
+    }
 
 }

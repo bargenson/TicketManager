@@ -11,20 +11,22 @@
 		<f:viewParam name="ticketId" value="#{ticketController.ticket}" converter="#{ticketConverter}"/>
 	</f:metadata>
 
-	<ui:define name="head">
+	<ui:define name="scripts">
 		<script type="text/javascript">
 			$(document).ready( function() {
 				$('#addCommentLink').click( function() {
 					$.ajax({
 						url: "_addComment.jsf?ticketId=#{ticketController.ticket.id}",
 						success: function(html) {
-							$('#modal-from-dom-body').html(html);
-							$('#modal-from-dom').modal('toggle');
+							$('#myModalBody').html(html);
+							$('#myModal').modal();
 						}
 					});
 				});
 			});
 		</script>
+    </ui:define>
+    <ui:define name="head">
 		<style type="text/css">
 			article header h2 {
 				text-align: center;
@@ -87,10 +89,13 @@
 				<p>
 					<h:outputText value="#{ticketController.ticket.description}" />
 				</p>
+                <h:form rendered="#{userController.developer and (empty ticketController.ticket.developer)}">
+                    <a4j:commandButton action="#{ticketController.takeTicket}" value="#{msg['showTicket.takeTicket']}" styleClass="btn btn-primary" />
+                </h:form>
 			</section>
 			<section id="comments">
 				<h5><h:outputText value="#{msg['showTicket.comments']}" /></h5>
-				<h:outputLink id="addCommentLink" value="#" styleClass="btn info" data-controls-modal="modal-from-dom" rendered="#{userController.authenticated}">
+				<h:outputLink id="addCommentLink" value="#" styleClass="btn info" rendered="#{userController.authenticated}">
 					<h:outputText value="#{msg['showTicket.addComment']}" />
 				</h:outputLink>	
 				<c:forEach items="#{ticketController.ticket.comments}" var="comment">

@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:a4j="http://richfaces.org/a4j"
 	xmlns:rich="http://richfaces.org/rich">
@@ -11,44 +12,15 @@
 		<title>TicketManager - <ui:insert name="title" /></title>
 		<meta name="description" content="A simple webapp for SUPINFO students." />
 		<meta name="author" content="@bargenson" />
-		<link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.3.0/bootstrap.min.css"/>
-		<script type="text/javascript" src="scripts/jquery-1.6.2.js"></script>	
-		<script type="text/javascript" src="scripts/bootstrap-modal.js"></script>	
-		<script type="text/javascript">
-			$(document).ready( function() {
-				$('#addTicketLink').click( function() {
-					$.ajax({
-						url: "_addTicket.jsf",
-						success: function(html) {
-							$('#modal-from-dom-body').html(html);
-						}
-					});
-					$('#modal-from-dom').modal('toggle');
-				});
-			});
-		</script>
+		<link rel="stylesheet" href="#{facesContext.externalContext.request.contextPath}/css/bootstrap.min.css"/>
 		<ui:insert name="head" />
 		<style type="text/css">
 			ul.alert-message li {
 				color: white;
 				list-style: none;
 			}
-			.modal-body {
-				padding: 0px;
-			}
-			.modal-body form {
-				margin-bottom: 0px;
-			}
-			.modal-body div.actions {
-				margin-bottom: 0px;
-			}
-			.modal-body fieldset {
-				width: 100%;
-				margin-bottom: 0px;
-			}
 			.rf-msg-err, .rf-msgs-err, .rf-msg-ftl, .rf-msgs-ftl, .rf-msg-inf, 
 				.rf-msgs-inf, .rf-msg-wrn, .rf-msgs-wrn, .rf-msg-ok, .rf-msgs-ok {
-				
 				padding-top: 5px;
 			}
 			body {
@@ -58,48 +30,54 @@
 	</h:head>
 
 	<h:body>
-		<header class="topbar-wrapper" style="z-index: 5;">
-			<div class="topbar" data-dropdown="dropdown">
-				<div class="topbar-inner">
-					<div class="container">
-						<h3>
-							<h:outputLink value="#{facesContext.externalContext.requestContextPath}/">
-								<h:outputText value="#{msg['template.main.projectName']}" />
-							</h:outputLink>
-						</h3>
-						<ul class="nav">
-							<li>
-								<h:outputLink value="newTickets.jsf">
-									<h:outputText value="#{msg['template.main.menu.newTickets']}" />
-								</h:outputLink>
-							</li>
-							<li>
-								<h:outputLink id="addTicketLink" value="#" data-controls-modal="modal-from-dom" rendered="#{userController.productOwner}">
-									<h:outputText value="#{msg['template.main.menu.addTicket']}" />
-								</h:outputLink>
-							</li>
-						</ul>
-						<h:form class="pull-left">
-							<h:inputText value="" placeholder="Search" />
-						</h:form>
-						<ul class="nav secondary-nav">
-							<li>
-								<h:outputLink value="login.jsf"
-									rendered="#{not userController.authenticated}">
-									<h:outputText value="#{msg['template.main.menu.login']}" />
-								</h:outputLink>
-							</li>
-							<li>
-								<h:form rendered="#{userController.authenticated}">
-									<h:commandLink action="#{userController.logout}"
-										value="#{msg['template.main.menu.logout']}" />
-								</h:form>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</header>
+		<div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <h:outputLink styleClass="brand" value="#{facesContext.externalContext.requestContextPath}/">
+                        <h:outputText value="#{msg['template.main.projectName']}" />
+                    </h:outputLink>
+                    <div class="nav-collapse">
+                        <ul class="nav">
+                            <li>
+                                <h:outputLink value="newTickets.jsf">
+                                    <h:outputText value="#{msg['template.main.menu.newTickets']}" />
+                                </h:outputLink>
+                            </li>
+                            <li>
+                                <h:outputLink value="allTickets.jsf">
+                                    <h:outputText value="#{msg['template.main.menu.allTickets']}" />
+                                </h:outputLink>
+                            </li>
+                            <li>
+                                <h:outputLink value="myTickets.jsf" rendered="#{userController.developer}">
+                                    <h:outputText value="#{msg['template.main.menu.myTickets']}" />
+                                </h:outputLink>
+                            </li>
+                            <li>
+                                <h:outputLink id="addTicketLink" value="#MyModal" rendered="#{userController.productOwner}">
+                                    <h:outputText value="#{msg['template.main.menu.addTicket']}" />
+                                </h:outputLink>
+                            </li>
+                        </ul>
+                        <h:form style="display: inline;">
+                            <ul class="nav pull-right">
+                                <li>
+                                    <h:outputLink value="login.jsf"
+                                                  rendered="#{not userController.authenticated}">
+                                        <h:outputText value="#{msg['template.main.menu.login']}" />
+                                    </h:outputLink>
+                                </li>
+                                <li>
+                                    <h:commandLink action="#{userController.logout}"
+                                                   rendered="#{userController.authenticated}"
+                                                   value="#{msg['template.main.menu.logout']}" />
+                                </li>
+                            </ul>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+		</div>
 		
 		<section style="margin-top: 80px;">
 			<rich:messages rendered="false" /> <!-- TODO : Replace that by... a better solution ^^ -->
@@ -110,13 +88,26 @@
 			<em>Powered by Java EE 6 !</em>
 		</footer>
 		
-		<div id="modal-from-dom" class="modal hide fade" style="display: none; ">
-			<div class="modal-header">
-				<a href="#" class="close">×</a>
-			</div>
-			<div id="modal-from-dom-body" class="modal-body"></div>
+		<div id="myModal" class="modal hide fade" style="display: none;">
+			<div id="myModalBody" class="modal-body"></div>
 		</div>
-          
+
+        <script type="text/javascript" src="#{facesContext.externalContext.request.contextPath}/scripts/jquery-1.7.2.min.js"></script>
+        <script type="text/javascript" src="#{facesContext.externalContext.request.contextPath}/scripts/bootstrap.js"></script>
+        <script type="text/javascript">
+            $(document).ready( function() {
+                $('#addTicketLink').click( function() {
+                    $.ajax({
+                        url: "_addTicket.jsf",
+                        success: function(html) {
+                            $('#myModalBody').html(html);
+                            $('#myModal').modal();
+                        }
+                    });
+                });
+            });
+        </script>
+        <ui:insert name="scripts" />
 	</h:body>
 
 </html>

@@ -44,14 +44,13 @@
     <profile>
         <subsystem xmlns="urn:jboss:domain:logging:1.0">
             <console-handler name="CONSOLE">
-                <level name="DEBUG"/>
+                <level name="INFO"/>
                 <formatter>
                     <pattern-formatter pattern="%d{HH:mm:ss,SSS} %-5p [%c] (%t) %s%E%n"/>
                 </formatter>
             </console-handler>
 
             <periodic-rotating-file-handler name="FILE">
-                <level name="DEBUG"/>
                 <formatter>
                     <pattern-formatter pattern="%d{HH:mm:ss,SSS} %-5p [%c] (%t) %s%E%n"/>
                 </formatter>
@@ -60,17 +59,17 @@
             </periodic-rotating-file-handler>
 
             <logger category="com.arjuna">
-                <level name="DEBUG"/>
+                <level name="WARN"/>
             </logger>
             <logger category="org.apache.tomcat.util.modeler">
-                <level name="DEBUG"/>
+                <level name="WARN"/>
             </logger>
             <logger category="sun.rmi">
-                <level name="DEBUG"/>
+                <level name="WARN"/>
             </logger>
 
             <root-logger>
-                <level name="DEBUG"/>
+                <level name="INFO"/>
                 <handlers>
                     <handler name="CONSOLE"/>
                     <handler name="FILE"/>
@@ -92,36 +91,12 @@
                     <statement></statement>
                 </datasource>
                 <datasource jndi-name="java:jboss/datasource/TicketManager-DS" pool-name="TicketManager-DS" enabled="true" jta="true" use-java-context="true" use-ccm="true">
-                    <connection-url>
-                        jdbc:mysql://127.1.10.1:3306/ticketmanager
-                    </connection-url>
-                    <driver>
-                        mysql
-                    </driver>
-                    <pool>
-                        <min-pool-size>
-                            10
-                        </min-pool-size>
-                        <max-pool-size>
-                            100
-                        </max-pool-size>
-                        <prefill>
-                            true
-                        </prefill>
-                        <use-strict-min>
-                            false
-                        </use-strict-min>
-                        <flush-strategy>
-                            FailingConnectionOnly
-                        </flush-strategy>
-                    </pool>
+                    <connection-url>jdbc:mysql://127.3.221.1:3306/ticketmanager</connection-url>
+                    <driver>mysql</driver>
+                    <pool></pool>
                     <security>
-                        <user-name>
-                            admin
-                        </user-name>
-                        <password>
-                            7XilIRTP_vLk
-                        </password>
+                        <user-name>admin</user-name>
+                        <password>SHR6i-Q8MfA2</password>
                     </security>
                 </datasource>
 		<drivers>

@@ -3,7 +3,8 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:a4j="http://richfaces.org/a4j"
-	xmlns:rich="http://richfaces.org/rich">
+	xmlns:rich="http://richfaces.org/rich"
+    styleClass="form-horizontal">
 	
 	<f:metadata>
 		<f:viewParam name="ticketId" value="#{commentController.comment.ticket}" converter="#{ticketConverter}"/>
@@ -11,21 +12,21 @@
 	
 	<fieldset>
 		<legend><h:outputText value="#{msg['addComment.legend']}" /></legend>
-		<div class="clearfix">
-			<div class="input">
+		<div class="control-group">
+			<div class="controls">
 				<rich:messages/>
 			</div>
 		</div>
-		<div class="clearfix">
-			<div class="input">
+		<div class="control-group">
+			<div class="controls">
 				<h:inputTextarea value="#{commentController.comment.content}">
 					<rich:validator />
 				</h:inputTextarea>
 			</div>
 		</div>
-		<div class="actions">
+		<div class="form-actions">
 			<h:inputHidden value="#{commentController.comment.ticket}" converter="#{ticketConverter}" />
-			<a4j:commandButton id="submit" styleClass="btn primary" 
+			<a4j:commandButton id="submit" styleClass="btn btn-primary"
 				action="#{commentController.addComment}" value="#{msg['addComment.submit']}" />
 		</div>
 	</fieldset>

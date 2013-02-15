@@ -9,32 +9,32 @@
 	<ui:define name="title"><h:outputText value="#{msg['login.page.title']}" /></ui:define>
 
 	<ui:define name="content">
-		<h:form styleClass="cmxform" id="loginForm">
+		<h:form styleClass="form-horizontal" id="loginForm">
     		<fieldset>
    				<legend><h:outputText value="#{msg['login.legend']}" /></legend>
-	    		<div class="clearfix">
-	    			<div class="input">
+	    		<div class="control-group">
+	    			<div class="controls">
 	    				<rich:messages />
 	    			</div>
 	    		</div>
-	    		<div class="clearfix">
-		    		<h:outputLabel value="#{msg['login.username']}" for="username"/>
-		    		<div class="input">
+	    		<div class="control-group">
+		    		<h:outputLabel styleClass="control-label" value="#{msg['login.username']}" for="username"/>
+		    		<div class="controls">
 		    			<h:inputText id="username" value="#{userController.username}">
 		    				<rich:validator />
 		    			</h:inputText>
 		    		</div>
 	    		</div>
-	    		<div class="clearfix">
-		    		<h:outputLabel value="#{msg['login.password']}" for="password"/>
-		    		<div class="input">
+	    		<div class="control-group">
+		    		<h:outputLabel styleClass="control-label" value="#{msg['login.password']}" for="password"/>
+		    		<div class="controls">
 		    			<h:inputSecret id="password" value="#{userController.password}">
 		    				<rich:validator />
 		    			</h:inputSecret>
 		    		</div>
 	    		</div>
-	    		<div class="actions">
-	    			<a4j:commandButton id="submit" styleClass="btn primary" 
+	    		<div class="form-actions">
+	    			<a4j:commandButton id="submit" styleClass="btn btn-primary"
 	    				value="#{msg['login.submit']}" action="#{userController.login}" />
 	    		</div>
     		</fieldset>
