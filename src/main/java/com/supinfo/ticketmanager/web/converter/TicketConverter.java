@@ -23,7 +23,7 @@ public class TicketConverter implements Converter {
 
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
-		return String.valueOf(((Ticket) value).getId());
+		return "";
 	}
 
 }
