@@ -20,12 +20,6 @@ import fr.bargenson.util.crypto.MD5Digester;
 import fr.bargenson.util.security.AbstractLoginModule;
 import fr.bargenson.util.security.UserInfo;
 
-/**
- * Created by IntelliJ IDEA.
- * User: bargenson
- * Date: 30/08/11
- * Time: 11:46
- */
 @Stateless
 public class UserService extends AbstractLoginModule implements Serializable {
 	
@@ -36,7 +30,7 @@ public class UserService extends AbstractLoginModule implements Serializable {
 
 
     @Override
-    public UserInfo getUserInfo(String username) throws Exception {
+    public UserInfo getUserInfo(String username) {
     	LOGGER.info("Authenticate " + username);
         final User user = userDao.findUserByUsername(username);
         return new UserInfo() {

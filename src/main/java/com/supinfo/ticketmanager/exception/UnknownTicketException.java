@@ -1,10 +1,9 @@
 package com.supinfo.ticketmanager.exception;
 
-public class UnknownTicketException extends RuntimeException {
+import javax.ejb.ApplicationException;
 
-	public UnknownTicketException(Long ticketId) {
-        this(ticketId, null);
-    }
+@ApplicationException
+public class UnknownTicketException extends RuntimeException {
 
     public UnknownTicketException(Long ticketId, Throwable cause) {
         super("Unknown ticket with id: " + ticketId + ".", cause);

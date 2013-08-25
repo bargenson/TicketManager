@@ -12,6 +12,7 @@ import com.supinfo.ticketmanager.entity.Developer;
 import com.supinfo.ticketmanager.entity.ProductOwner;
 import com.supinfo.ticketmanager.entity.User;
 
+import com.supinfo.ticketmanager.exception.UnknownUserException;
 import fr.bargenson.util.crypto.MD5Digester;
 
 @WebListener
@@ -33,15 +34,15 @@ public class Bootstrap implements ServletContextListener {
 				"ProductOwner", digester.digest("popo"), "Steve",
 				"Jobs", "steve@apple.com", new Date()
 				);
-		
-		addUserIfDoesntExist(developer);
-		addUserIfDoesntExist(productOwner);
+
+        addUserIfDoesNotExist(developer);
+        addUserIfDoesNotExist(productOwner);
 	}
 
-	private void addUserIfDoesntExist(User user) {
+	private void addUserIfDoesNotExist(User user) {
 		try {
 			userDao.findUserByUsername(user.getUsername());
-		} catch (Exception e) {
+		} catch (UnknownUserException e) {
 			userDao.addUser(user);
 		}
 	}
