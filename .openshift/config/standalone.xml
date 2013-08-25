@@ -91,12 +91,12 @@
                     <statement></statement>
                 </datasource>
                 <datasource jndi-name="java:jboss/datasource/TicketManager-DS" pool-name="TicketManager-DS" enabled="true" jta="true" use-java-context="true" use-ccm="true">
-                    <connection-url>jdbc:mysql://127.3.221.1:3306/ticketmanager</connection-url>
+                    <connection-url>mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/ticketmanager</connection-url>
                     <driver>mysql</driver>
                     <pool></pool>
                     <security>
-                        <user-name>admin</user-name>
-                        <password>SHR6i-Q8MfA2</password>
+                        <user-name>adminJQYSdQf</user-name>
+                        <password>8H2zbnAyepMa</password>
                     </security>
                 </datasource>
 		<drivers>
