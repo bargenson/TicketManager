@@ -91,7 +91,7 @@
                     <statement></statement>
                 </datasource>
                 <datasource jndi-name="java:jboss/datasource/TicketManager-DS" pool-name="TicketManager-DS" enabled="true" jta="true" use-java-context="true" use-ccm="true">
-                    <connection-url>mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/ticketmanager</connection-url>
+                    <connection-url>jdbc:mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/ticketmanager</connection-url>
                     <driver>mysql</driver>
                     <pool></pool>
                     <security>
