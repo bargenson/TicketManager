@@ -3,7 +3,7 @@
 
     <persistence-unit name="TicketManager-PU" transaction-type="JTA">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
-        <jta-data-source>java:jboss/datasource/TicketManager-DS</jta-data-source>
+        <jta-data-source>java:jboss/datasources/MysqlDS</jta-data-source>
         <properties>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
         </properties>
