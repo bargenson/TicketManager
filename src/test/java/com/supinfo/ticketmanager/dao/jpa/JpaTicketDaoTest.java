@@ -109,7 +109,7 @@ public class JpaTicketDaoTest {
 	public void testGetAllTickets() {
 		final List<Ticket> tickets = ticketDao.getAllTickets();
 		assertNotNull(tickets);
-		assertEquals(2, tickets.size());
+		assertEquals(3, tickets.size());
 	}
 
 	@Test
